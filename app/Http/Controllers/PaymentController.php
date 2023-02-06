@@ -1,0 +1,99 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Checkout;
+use App\Models\Clothes;
+use App\Models\Booking;
+
+
+class PaymentController extends Controller
+{
+
+    // payment
+    public function payment(Request $request)
+    {
+
+        // Set your Merchant Server Key 
+        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => rand(),
+                'gross_amount' => $request->get('total'),
+            ),
+            'item_details' => array(
+                [
+                    'id' => 'a1',
+                    'price' => $request->get('price'),
+                    'quantity' =>  $request->get('quantity'),
+                    'name' => $request->get('product')
+                ],
+                [
+                    'id' => 'b1',
+                    'price' =>  $request->get('cost'),
+                    'quantity' => 1,
+                    'name' => 'Shipping Fee'
+                ]
+
+
+            ),
+            'customer_details' => array(
+                'first_name' => $request->get('name'),
+                'last_name' => '',
+                'email' => $request->get('email'),
+                'phone' => $request->get('phone_number'),
+            ),
+        );
+
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        return view('order.payment', ['snap_token' => $snapToken]);
+    }
+
+
+
+    public function payment_post(Request $request)
+    {
+        $json = json_decode($request->get('json'));
+
+        $order['clothes_id'] = $request->get('clothes_id');
+        $order['user_booking_id'] = $request->get('user_booking_id');
+        $order['admin_id'] = $request->get('admin_id');
+        $order['status'] = $json->transaction_status;
+        $order['courier'] = $request->get('courier_name');
+        $order['service'] = $request->get('service');
+        $order['etd'] = $request->get('etd');
+        $order['quantity'] = $request->get('quantity');
+        $order['size_cloth'] = $request->get('size_cloth');
+        $order['transaction_id'] = $json->transaction_id;
+        $order['order_id'] = $json->order_id;
+        $order['gross_amount'] = $json->gross_amount;
+        $order['payment_type'] = $json->payment_type;
+        $order['payment_code'] = isset($json->payment_code) ? $json->payment_code : null;
+        $order['pdf_url'] = isset($json->pdf_url) ? $json->pdf_url : null;
+
+        // save to checkout
+        Checkout::create($order);
+
+        // reduce stock
+        $clothes = Clothes::where('id', $request->get('clothes_id'))->first();
+        $size = $clothes[$request->get('size_cloth')];
+        $data[$request->get('size_cloth')] = $size - $request->get('quantity');
+        Clothes::where('id', $request->get('clothes_id'))->update($data);
+
+        // deleted booking data
+        Booking::destroy($request->get("booking_id"));
+
+        return redirect('/clothes')->with('success', 'Verified payment and order confirmed!');
+
+        // return $order->save() ? redirect('/clothes')->with('alert-success', 'Order berhasil dibuat') : redirect('/clothes')->with('alert-failed', 'Terjadi Kesalahan');
+    }
+}
