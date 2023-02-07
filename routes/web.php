@@ -43,7 +43,7 @@ use App\Http\Controllers\DashboardClothesController;
 
 Route::get('/profile', [UserController::class, 'index'])->middleware('auth');
 
-Route::get('/clothes', [ClothesController::class, 'index']);
+Route::get('/', [ClothesController::class, 'index']);
 
 Route::get('clothes/{clothes:slug}', [ClothesController::class, 'show']);
 
