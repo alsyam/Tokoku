@@ -63,6 +63,7 @@
 
             <input type="hidden" value="{{ $user->city }}" id="id_destination_city" name="id_destination_city">
             <input type="hidden" value="{{ $weight }}" id="weight" name="weight">
+            <p>{{ $weight }}</p>
             <select class="form-select mb-3" id="courier" name="courier" onchange="cekCost();">
                 <option value="">Select Courier</option>
                 <option value="jne">JNE</option>
@@ -103,7 +104,6 @@
                 <input type="hidden" value="{{ $user->name }}" name="name">
                 <input type="hidden" value="{{ $user->email }}" name="email">
                 <input type="hidden" value="{{ $user->phone_number }}" name="phone_number">
-                {{-- <input type="hidden" value="{{ $quantity }}" name="quantity"> --}}
                 @foreach ($booking as $book)
                     <input type="hidden" value="{{ $book->quantity }}" name="quantity">
                     <input type="hidden" value="{{ $book->clothes_id }}" name="clothes_id">

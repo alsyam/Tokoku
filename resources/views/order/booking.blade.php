@@ -44,14 +44,14 @@
                         </form>
                         <td>{{ $book->clothes->price }}</td>
                         <td>{{ $book->clothes->price * $book->quantity }} </td>
-                        {{-- <td>
-                                <form action="/booking/{{ $book->id }}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="badge bg-danger border-0" onclick="return confirm('Are you sure?')"><i
-                                            class="bi bi-trash"></i></button>
-                                </form>
-                            </td> --}}
+                        <td>
+                            <form action="/booking/{{ $book->id }}" method="post" class="d-inline">
+                                @method('delete')
+                                @csrf
+                                <button class="badge bg-danger border-0" onclick="return confirm('Are you sure?')"><i
+                                        class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

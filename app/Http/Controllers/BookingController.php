@@ -239,8 +239,10 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Booking $booking)
+    public function destroy($id)
     {
-        //
+        Booking::destroy($id);
+
+        return redirect('/')->with('success', 'Cart has been deleted!');
     }
 }
