@@ -15,6 +15,12 @@ class PaymentController extends Controller
     public function payment(Request $request)
     {
 
+        $orders = Booking::where('user_booking_id', Auth()->user()->id)->get();
+        $product = "";
+        foreach ($orders as $order) {
+            $product .= $order->clothes->product . ", ";;
+        }
+
         // Set your Merchant Server Key 
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
@@ -24,6 +30,8 @@ class PaymentController extends Controller
         // Set 3DS transaction for credit card to true
         \Midtrans\Config::$is3ds = true;
 
+
+
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
@@ -32,9 +40,9 @@ class PaymentController extends Controller
             'item_details' => array(
                 [
                     'id' => 'a1',
-                    'price' => $request->get('price'),
-                    'quantity' =>  $request->get('quantity'),
-                    'name' => $request->get('product')
+                    'price' => $request->get('subtotal'),
+                    'quantity' =>  1,
+                    'name' => rtrim($product, ", ")
                 ],
                 [
                     'id' => 'b1',

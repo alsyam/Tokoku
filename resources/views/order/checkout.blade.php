@@ -94,7 +94,7 @@
             </table>
             <form action="/payment" method="get">
                 @csrf
-                {{-- <input type="hidden" value="{{ $subtotal }}" name="subtotal"> --}}
+                <input type="hidden" value="{{ $subtotal }}" name="subtotal">
                 <input type="hidden" id="costProduct" value="" name="cost">
                 <input type="hidden" id="service" value="" name="service">
                 <input type="hidden" id="etd" value="" name="etd">
