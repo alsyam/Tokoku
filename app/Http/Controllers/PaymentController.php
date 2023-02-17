@@ -18,7 +18,7 @@ class PaymentController extends Controller
         $orders = Booking::where('user_booking_id', Auth()->user()->id)->get();
         $product = "";
         foreach ($orders as $order) {
-            $product .= $order->clothes->product . ", ";;
+            $product .= $order->clothes->product . ", ";
         }
 
         // Set your Merchant Server Key 
@@ -70,35 +70,48 @@ class PaymentController extends Controller
 
     public function payment_post(Request $request)
     {
+        $bookings = Booking::where('user_booking_id', Auth()->user()->id)->get();
+
         $json = json_decode($request->get('json'));
 
-        $order['clothes_id'] = $request->get('clothes_id');
-        $order['user_booking_id'] = $request->get('user_booking_id');
-        $order['admin_id'] = $request->get('admin_id');
-        $order['status'] = $json->transaction_status;
-        $order['courier'] = $request->get('courier_name');
-        $order['service'] = $request->get('service');
-        $order['etd'] = $request->get('etd');
-        $order['quantity'] = $request->get('quantity');
-        $order['size_cloth'] = $request->get('size_cloth');
-        $order['transaction_id'] = $json->transaction_id;
-        $order['order_id'] = $json->order_id;
-        $order['gross_amount'] = $json->gross_amount;
-        $order['payment_type'] = $json->payment_type;
-        $order['payment_code'] = isset($json->payment_code) ? $json->payment_code : null;
-        $order['pdf_url'] = isset($json->pdf_url) ? $json->pdf_url : null;
+
+
+        foreach ($bookings as $booking) {
+            $order['clothes_id'] = $booking->clothes_id;
+            $order['user_booking_id'] = $request->get('user_booking_id');
+            $order['admin_id'] = $request->get('admin_id');
+            $order['status'] = $json->transaction_status;
+            $order['courier'] = $request->get('courier_name');
+            $order['service'] = $request->get('service');
+            $order['etd'] = $request->get('etd');
+            // $order['quantity'] = $request->get('quantity');
+            $order['quantity'] = $booking->quantity;
+            $order['size_cloth'] = $booking->size_cloth;
+            $order['transaction_id'] = $json->transaction_id;
+            $order['order_id'] = $json->order_id;
+            $order['gross_amount'] = $json->gross_amount;
+            $order['payment_type'] = $json->payment_type;
+            $order['payment_code'] = isset($json->payment_code) ? $json->payment_code : null;
+            $order['pdf_url'] = isset($json->pdf_url) ? $json->pdf_url : null;
+            Checkout::create($order);
+        }
 
         // save to checkout
-        Checkout::create($order);
 
         // reduce stock
-        $clothes = Clothes::where('id', $request->get('clothes_id'))->first();
-        $size = $clothes[$request->get('size_cloth')];
-        $data[$request->get('size_cloth')] = $size - $request->get('quantity');
-        Clothes::where('id', $request->get('clothes_id'))->update($data);
+        foreach ($bookings as $booking) {
+            $clothes = Clothes::where('id', $booking->clothes_id)->get();
+            foreach ($clothes as $clothes) {
+                $size = $clothes[$booking->size_cloth];
+                $data[$booking->size_cloth] = $size - $booking->quantity;
+                Clothes::where('id', $booking->clothes_id)->update($data);
+            }
+        }
 
         // deleted booking data
-        Booking::destroy($request->get("booking_id"));
+        foreach ($bookings as $booking) {
+            Booking::destroy($booking->id);
+        }
 
         return redirect('/clothes')->with('success', 'Verified payment and order confirmed!');
 
