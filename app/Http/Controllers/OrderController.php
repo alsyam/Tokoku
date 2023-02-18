@@ -18,7 +18,7 @@ class OrderController extends Controller
         $this->authorize('admin');
 
         return view('dashboard.order.index', [
-            'orders' => Checkout::all()
+            'orders' => Checkout::latest()->get()
         ]);
     }
 
