@@ -145,14 +145,16 @@ class OrderController extends Controller
             $city = json_decode($response);
         }
 
-        $orders = Checkout::where('order_id',  $order_id)->first();
+        $order = Checkout::where('order_id',  $order_id)->first();
+        // $orders = Checkout::where('order_id',  $order_id)->first();
 
-        $createdAt = \Carbon\Carbon::parse($orders->created_at);
+        $createdAt = \Carbon\Carbon::parse($order->created_at);
 
 
 
         return view('dashboard.order.show', [
-            'orders' => $orders,
+            'orders' => Checkout::where('order_id',  $order_id)->get(),
+            'order' => $order,
             'provinces' => $province->rajaongkir->results,
             'cities' => $city->rajaongkir->results,
             'day' => $createdAt->day,

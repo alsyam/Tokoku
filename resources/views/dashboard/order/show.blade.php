@@ -4,66 +4,68 @@
     <div class="container">
         <div class="row my-3">
             <div class="col-lg-8">
-
                 <h3>Transaction Detail</h3>
-                <p> No. Invoice : {{ $orders->order_id }} </p>
-                <p>Tanggal Pembelian : {{ $orders->created_at->format('d-M-Y h:i') }}</p>
+                <p> No. Invoice : {{ $order->order_id }} </p>
+                <p>Tanggal Pembelian : {{ $order->created_at->format('d-M-Y h:i') }}</p>
 
 
 
                 <h3>Product Details</h3>
                 <table class="table border border-4">
-                    <tr>
-                        <td rowspan="3" class="col-2"><img src="{{ asset('storage/' . $orders->clothes->image) }}"
-                                width="100px" alt="">
-                        </td>
-                        <td class="col-4">{{ $orders->clothes->product }}
-                            <br>
-                            <div style="text-transform: uppercase;">
-                                {{ $orders->size_cloth }}
-                            </div>
-                            {{ $orders->quantity }} ({{ $orders->clothes->weight }} gr) x
-                            Rp.{{ number_format($orders->clothes->price, 0, ',', '.') }}
-                        </td>
-                        <td class="col-2">Total Price
-                            <br>
-                            Rp. {{ number_format($orders->gross_amount, 0, ',', '.') }}
-                        </td>
-                    </tr>
+                    @foreach ($orders as $index => $order)
+                        <tr>
+                            <td class="col-2"><img src="{{ asset('storage/' . $order->clothes->image) }}" width="100px"
+                                    alt="">
+                            </td>
+                            <td class="col-4">{{ $order->clothes->product }}
+                                <br>
+                                <div style="text-transform: uppercase;">
+                                    {{ $order->size_cloth }}
+                                </div>
+                                {{ $order->quantity }} ({{ $order->clothes->weight }} gr) x
+                                Rp.{{ number_format($order->clothes->price, 0, ',', '.') }}
+                            </td>
+                            <td class="col-2">Total Price
+                                <br>
+                                Rp. {{ number_format($order->quantity * $order->clothes->price, 0, ',', '.') }}
+                            </td>
+                        </tr>
+                    @endforeach
                 </table>
                 <h3>Shipping Info</h3>
                 <p>Ongkir kembali jika pesanan tiba lebih dari
-                    {{ intval($orders->etd) + intval($day) . ' ' . $month . ' ' . $year }} 23:59 (ada
+                    {{ intval($order->etd) + intval($day) . ' ' . $month . ' ' . $year }} 23:59 (ada
                     keterlambatan
                     penyerahan barang ke
                     kurir).</p>
                 <table class="table  border border-4">
                     <tr>
                         <td class="">Courier</td>
-                        <td style="text-transform: uppercase;">: {{ $orders->courier . ' - ' . $orders->service }}</td>
+                        <td style="text-transform: uppercase;">: {{ $order->courier . ' - ' . $order->service }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="">Order Id</td>
-                        <td>: {{ $orders->order_id }}</td>
+                        <td>: {{ $order->order_id }}</td>
                     </tr>
                     <tr>
                         <td class="">Address</td>
-                        <td>: <b>{{ $orders->author->name }}</b>
-                            <p>{{ $orders->author->phone_number }}
-                                <br>{{ $orders->author->address }}
+                        <td>: <b>{{ $order->author->name }}</b>
+                            <p>{{ $order->author->phone_number }}
+                                <br>{{ $order->author->address }}
 
                                 @foreach ($provinces as $provinces)
-                                    @if ($provinces->province_id === $orders->author->province)
+                                    @if ($provinces->province_id === $order->author->province)
                                         {{ $provinces->province }},
                                     @endif
                                 @endforeach
                                 @foreach ($cities as $city)
-                                    @if ($city->city_id === $orders->author->city)
+                                    @if ($city->city_id === $order->author->city)
                                         {{ $city->type }}
                                         {{ $city->city_name }},
                                     @endif
                                 @endforeach
-                                {{ $orders->author->zip_code }}
+                                {{ $order->author->zip_code }}
                             </p>
                         </td>
                     </tr>
@@ -75,21 +77,31 @@
                 <table class="table border border-4">
                     <tr>
                         <td>Payment Method</td>
-                        <td align="right">{{ $orders->payment_type }}</td>
+                        <td align="right">{{ $order->payment_type }}</td>
                     </tr>
                     <tr>
                         <td>Total Price</td>
-                        <td align="right">{{ $orders->payment_type }}</td>
+                        <td align="right">
+                            @php
+                                $totalPrice = 0;
+                            @endphp
+                            @foreach ($orders as $order)
+                                <?php $totalPrice += $order->clothes->price * $order->quantity; ?>
+                            @endforeach
+                            Rp. {{ number_format($totalPrice, 0, ',', '.') }}
+                        </td>
                     </tr>
                     <tr>
                         <td>Total Shipping Cost</td>
-                        <td align="right">{{ $orders->payment_type }}</td>
+                        <td align="right">Rp. {{ number_format($order->gross_amount - $totalPrice, 0, ',', '.') }}</td>
                     </tr>
                     <tr>
                         <td>
                             <h6>Total Spend</h6>
                         </td>
-                        <td align="right">{{ $orders->gross_amount }}</td>
+                        <td align="right">
+                            <h6>Rp. {{ number_format($order->gross_amount, 0, ',', '.') }}</h6>
+                        </td>
                     </tr>
                 </table>
             </div>

@@ -84,7 +84,6 @@ class PaymentController extends Controller
             $order['courier'] = $request->get('courier_name');
             $order['service'] = $request->get('service');
             $order['etd'] = $request->get('etd');
-            // $order['quantity'] = $request->get('quantity');
             $order['quantity'] = $booking->quantity;
             $order['size_cloth'] = $booking->size_cloth;
             $order['transaction_id'] = $json->transaction_id;
