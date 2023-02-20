@@ -1,23 +1,15 @@
 @extends('layouts/main')
 
 @section('container')
+    @if (session()->has('success'))
+        <div class="alert alert-info text-center" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="row g-5 mb-5">
         <div class="col-md-5 col-lg-7 order-md-last">
             <h4 class="mb-3">{{ $clothes->product }}</h4>
             <h3>Rp. {{ number_format($clothes->price, 2, ',', '.') }} </h3>
-
-
-            {{-- <button type="button" class="btn btn-outline-danger {{ $clothes->s > 0 ? 'active' : 'disabled' }}">S
-                {{ $clothes->s }}</button>
-            <button type="button" class="btn btn-outline-danger {{ $clothes->m > 0 ? 'active' : 'disabled' }}">M
-                {{ $clothes->m }}</button>
-            <button type="button" class="btn btn-outline-danger {{ $clothes->l > 0 ? 'active' : 'disabled' }}">L
-                {{ $clothes->l }}</button>
-            <button type="button" class="btn btn-outline-danger {{ $clothes->xl > 0 ? 'active' : 'disabled' }}">XL
-                {{ $clothes->xl }}</button>
-            <button type="button" class="btn btn-outline-danger {{ $clothes->xxl > 0 ? 'active' : 'disabled' }}">XXL
-                {{ $clothes->xxl }}</button> --}}
-
             <article class="my-3 fs-9">
                 <hr>
                 <p>Category: {{ $clothes->category->name }}</p>
@@ -27,20 +19,21 @@
                 <form action="/booking" method="POST" enctype="multipart/form-data">
                     @csrf
                     <select class="form-select mb-3" id="size_cloth" name="size_cloth">
-                        <option id="s" value="s">Size: S</option>
-                        <option id="m" value="m">Size: M</option>
-                        <option id="l" value="l">Size: L</option>
-                        <option id="xl" value="xl">Size: XL</option>
-                        <option id="xxl" value="xxl">Size: XXL </option>
+                        <option value="s">Size: S</option>
+                        <option value="m">Size: M</option>
+                        <option value="l">Size: L</option>
+                        <option value="xl">Size: XL</option>
+                        <option value="xxl">Size: XXL </option>
                     </select>
                     <input type="number" min="1" max="5" class="form-control mb-3" id="quantity"
                         name="quantity" value="1">
                     <input type="hidden" value="{{ $clothes->weight }}" name="weight_product" id="weight_product">
                     <input type="hidden" value="{{ $clothes->user_id }}" name="admin_id" id="admin_id">
                     <input id="clothes_id" type="hidden" name="clothes_id" value="{{ $clothes->id }}">
+                    <input id="slug" type="hidden" name="slug" value="{{ $clothes->slug }}">
                     <button type="submit" class="btn btn-danger">Add
                         to shopping cart</button>
-                    <a href="/clothes" class="btn btn-outline-secondary">Back to Clothes</a>
+                    <a href="/" class="btn btn-outline-secondary">Back to Clothes</a>
                 </form>
                 <hr>
             </article>

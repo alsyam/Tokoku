@@ -7,9 +7,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link {{ $active === 'clothes' ? 'active' : '' }}" href="/clothes">Clothes</a>
-                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link {{ $active === 'clothes' ? 'active' : '' }}" href="/">Clothes</a>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ $active === 'categories' ? 'active' : '' }}" href="/categories">Categories</a>
                 </li>
@@ -21,8 +21,9 @@
             <ul class="navbar-nav ms-auto">
                 @auth
                     <li class="nav-item dropdown">
-                        <a class="nav-link {{ $active === 'profile' ? 'active' : '' }} dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false"> {{ auth()->user()->name }}
+                        <a class="nav-link {{ $active === 'profile' ? 'active' : '' }} dropdown-toggle" href="#"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/profile"><i class="bi bi-layout-text-sidebar-reverse"></i>

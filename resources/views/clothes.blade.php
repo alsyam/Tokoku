@@ -2,7 +2,11 @@
 
 @section('container')
     <h1 class="mb-3 text-center">{{ $title }}</h1>
-
+    @if (session()->has('success'))
+        <div class="alert alert-info text-center" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="row justify-content-center mb-3">
         <div class="col-6">
             <form action="/clothes">

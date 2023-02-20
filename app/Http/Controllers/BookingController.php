@@ -189,7 +189,7 @@ class BookingController extends Controller
 
         Booking::create($data);
 
-        return redirect('/clothes')->with('success', 'New Product has been added!');
+        return redirect('/clothes/' . $request->slug)->with('success', 'New Product has been added!');
     }
 
     /**
@@ -243,6 +243,6 @@ class BookingController extends Controller
     {
         Booking::destroy($id);
 
-        return redirect('/')->with('success', 'Cart has been deleted!');
+        return redirect('/booking')->with('success', 'Item has been deleted!');
     }
 }

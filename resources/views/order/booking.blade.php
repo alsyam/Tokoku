@@ -5,7 +5,7 @@
         <h1 class="h2">My Catalog</h1>
     </div>
     @if (session()->has('success'))
-        <div class="alert alert-info col-lg-8" role="alert">
+        <div class="alert alert-info text-center" role="alert">
             {{ session('success') }}
         </div>
     @endif
@@ -30,20 +30,18 @@
                         <td>{{ $loop->iteration }}</td>
                         <td><img src="{{ asset('storage/' . $book->clothes->image) }}" alt=""></td>
                         <td>{{ $book->clothes->product }}</td>
-                        <td>{{ $book->size_cloth }}</td>
+                        <td class="text-uppercase">{{ $book->size_cloth }}</td>
                         <form action="/booking/{{ $book->id }}" method="post">
                             @method('put')
                             @csrf
                             <td>
-                                <input type="number" min="1" max="5" class="form-control mb-2" id="quantity"
-                                    name="quantity" value="{{ $book->quantity }}">
-                                {{-- <input type="hidden" id="sub_total" name="subtotal"
-                                    value="{{ $book->clothes->price * $book->quantity }}"> --}}
+                                <input type="number" min="1" max="{{ $book->clothes[$book->size_cloth] }}"
+                                    class="form-control mb-2" id="quantity" name="quantity" value="{{ $book->quantity }}">
                                 <button type="submit" class="btn btn-outline-danger">Change</button>
                             </td>
                         </form>
-                        <td>{{ $book->clothes->price }}</td>
-                        <td>{{ $book->clothes->price * $book->quantity }} </td>
+                        <td>Rp. {{ number_format($book->clothes->price, 0, ',', '.') }} </td>
+                        <td>Rp. {{ number_format($book->clothes->price * $book->quantity, 0, ',', '.') }} </td>
                         <td>
                             <form action="/booking/{{ $book->id }}" method="post" class="d-inline">
                                 @method('delete')
