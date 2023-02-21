@@ -17,9 +17,10 @@ class UserController extends Controller
         return view('user.index', [
             'title' => 'Profile',
             "active" => "profile",
+            "activeNavItem" => 'Personal Info',
             'users' => User::where('id', Auth()->user()->id)->get()
-            
-    ]);
+
+        ]);
     }
 
     /**
