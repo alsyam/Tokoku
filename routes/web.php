@@ -42,6 +42,8 @@ use App\Http\Controllers\DashboardClothesController;
 // });
 
 Route::get('/profile', [UserController::class, 'index'])->middleware('auth');
+Route::post('/profile/{id}', [UserController::class, 'updateUser'])->middleware('auth');
+// Route::post('/profile/{id}', [UserController::class, 'updateUser'])->name('users.update');
 
 Route::get('/', [ClothesController::class, 'index']);
 

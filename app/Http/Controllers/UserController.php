@@ -12,7 +12,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         return view('user.index', [
             'title' => 'Profile',
@@ -22,7 +22,39 @@ class UserController extends Controller
 
         ]);
     }
+    public function updateUser(Request $request)
+    {
+        // $user = User::find($id);
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'username' => 'required|min:3|max:255|unique:users',
+            'email' => 'required|email:dns|unique:users',
+            'password' =>  'required|min:5|max:255',
+            'address' =>  'required|max:255',
+            'province' =>  'required|max:255',
+            'city' =>  'required|max:255',
+            'zip_code' =>  'required|max:255',
+            'phone_number' =>  'required|max:255',
+        ]);
 
+        $user['name'] = $validatedData['name'];
+        $user['username'] = $validatedData['username'];
+        $user['email'] = $validatedData['email'];
+        $user['address'] = $validatedData['address'];
+        $user['province'] = $validatedData['province'];
+        $user['city'] = $validatedData['city'];
+        $user['zip_code'] = $validatedData['zip_code'];
+        $user['phone_number'] = $validatedData['phone_number'];
+
+        if (!empty($validatedData['password'])) {
+            $user['password'] = bcrypt($validatedData['password']);
+        }
+
+
+
+        User::where('id', Auth()->user()->id)->save($user);
+        return redirect('/profile')->with('success', 'Personal data has been updated!');
+    }
     /**
      * Show the form for creating a new resource.
      *
