@@ -12,13 +12,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('user.index', [
             'title' => 'Profile',
             "active" => "profile",
-            "activeNavItem" => 'Personal Info',
-            'users' => User::where('id', Auth()->user()->id)->get()
+            "activeNavItem" => 'personalInfo',
+            'users' => User::where('id', Auth()->user()->id)->first()
 
         ]);
     }
