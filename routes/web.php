@@ -42,8 +42,11 @@ use App\Http\Controllers\DashboardClothesController;
 // });
 
 Route::get('/profile', [UserController::class, 'index'])->middleware('auth');
-Route::post('/profile/{id}', [UserController::class, 'updateUser'])->middleware('auth');
-// Route::post('/profile/{id}', [UserController::class, 'updateUser'])->name('users.update');
+Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth');
+// halam purchase
+Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth');
+// modal
+Route::get('profile/purchase/{order_id}', [UserController::class, 'showModal']);
 
 Route::get('/', [ClothesController::class, 'index']);
 

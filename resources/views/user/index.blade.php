@@ -10,15 +10,15 @@
                     <ul class="navbar-nav ms-auto flex-row justify-content-between">
                         <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'personalInfo' ? 'active' : '' }}"
-                                href="#">Personal Info</a>
+                                href="/profile">Personal Info</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Purchase History' ? 'active' : '' }}"
-                                href="#">Purchase History</a>
+                                href="/profile/purchase">Purchase History</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Address Book' ? 'active' : '' }}"
-                                href="#">Address Book</a>
+                                href="/address">Address Book</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Access Data' ? 'active' : '' }}" href="#">Access
@@ -32,28 +32,28 @@
                     </ul>
                 </div>
                 <div class="card-body">
-                    <form action="profile/{{ $users->id }}" method="POST">
+                    <form action="{{ route('users.update', $users->id) }}}" method="POST">
                         @csrf
-                        {{-- @method('post') --}}
+                        {{-- @method('PUT') --}}
                         <div class="form-group mb-2">
                             <label for="fullname">Full Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter your full name" value="{{ $users->name }}">
+                                placeholder="Enter your full name" value="{{ $users->name }}" required>
                         </div>
                         <div class="form-group mb-2">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" name="username"
-                                value="{{ $users->username }}">
+                                placeholder="Enter your username" value="{{ $users->username }}" required>
                         </div>
                         <div class="form-group mb-2">
                             <label for="email">Email address</label>
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="Enter email" value="{{ $users->email }}">
+                                placeholder="Enter email" value="{{ $users->email }}" required>
                         </div>
                         <div class="form-group mb-2">
                             <label for="phone">Phone Number</label>
                             <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                placeholder="Enter phone number" value="{{ $users->phone_number }}">
+                                placeholder="Enter phone number" value="{{ $users->phone_number }}" required>
                         </div>
                         <div class="form-group mb-2">
                             <label for="password">Password</label>
