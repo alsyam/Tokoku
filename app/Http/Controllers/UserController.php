@@ -74,7 +74,7 @@ class UserController extends Controller
 
 
 
-    public function purchase()
+    public function showPurchase($order_id)
     {
         // for PROVINCE
         $curl = curl_init();
@@ -132,16 +132,16 @@ class UserController extends Controller
             $city = json_decode($response);
         }
 
-        $member = User::where('id', Auth()->user()->id)->first();
-        $order = Checkout::where('user_booking_id',  $member->id)->first();
-        // $orders = Checkout::where('order_id',  $order_id)->first();
+        // $member = User::where('id', Auth()->user()->id)->first();
+        // $order = Checkout::where('user_booking_id',  $member->id)->first();
+        $order = Checkout::where('order_id',  $order_id)->first();
 
         $createdAt = \Carbon\Carbon::parse($order->created_at);
 
 
 
-        return view('user.purchase', [
-            'orders' => Checkout::where('user_booking_id',  $member->id)->latest()->get(),
+        return view('user.showPurchase', [
+            'orders' => Checkout::where('order_id',  $order_id)->get(),
             'order' => $order,
             'provinces' => $province->rajaongkir->results,
             'cities' => $city->rajaongkir->results,
@@ -155,11 +155,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function showModal($order_id)
+    public function purchase()
     {
-        $order = Checkout::find($order_id);
         return view('user.purchase', [
-            'orderDetail' => $order
+            'title' => 'Profile',
+            "active" => "profile",
+            "activeNavItem" => "purchaseHistory",
+            'orders' => Checkout::latest()->get()
         ]);
     }
 

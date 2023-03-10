@@ -61,10 +61,12 @@
                                         Rp. {{ number_format($order->gross_amount, 0, ',', '.') }}
                                         <br>
                                         <!-- Button trigger modal -->
-                                        <span type="button" class="badge bg-primary mt-2" data-bs-toggle="modal"
+                                        <a href="/profile/purchase/{{ $order->order_id }}"
+                                            class="text-decoration-none badge bg-primary mt-2" data-feather="eye">Detail</a>
+                                        {{-- <span type="button" class="badge bg-primary mt-2" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal" data-order-id="{{ $order->order_id }}">
                                             Detail
-                                        </span>
+                                        </span> --}}
 
                                     </td>
                                 </tr>
@@ -76,15 +78,6 @@
             </div>
         </div>
     </div>
-    <!-- Tambahkan script berikut pada bagian bawah tampilan utama -->
-    <script>
-        $('#orderModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var order_id = button.data('order-id')
-            var modal = $(this)
-            modal.find('.modal-body').load('/profile/purchase/' + order_id)
-        })
-    </script>
 @endsection
 
 
@@ -100,7 +93,7 @@
             </div>
             <div class="modal-body">
 
-                {{ $orderDetail->order_id }}
+                {{-- {{ $orderDetail->order_id }} --}}
                 {{-- <h3>Transaction Detail</h3>
                 <p> No. Invoice : {{ $order->order_id }} </p>
                 <p>Tanggal Pembelian : {{ $order->created_at->format('d-M-Y h:i') }}</p>

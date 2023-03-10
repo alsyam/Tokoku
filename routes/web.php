@@ -45,8 +45,8 @@ Route::get('/profile', [UserController::class, 'index'])->middleware('auth');
 Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth');
 // halam purchase
 Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth');
-// modal
-Route::get('profile/purchase/{order_id}', [UserController::class, 'showModal']);
+Route::get('profile/purchase/{user}', [UserController::class, 'showPurchase'])->middleware('auth');
+
 
 Route::get('/', [ClothesController::class, 'index']);
 
