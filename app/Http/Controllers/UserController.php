@@ -72,7 +72,17 @@ class UserController extends Controller
         return redirect('/profile')->with('success', 'Personal data has been updated!');
     }
 
-
+    public function purchase()
+    {
+        $member = User::where('id', Auth()->user()->id)->first();
+        $order = Checkout::where('user_booking_id',  $member->id)->get();
+        return view('user.purchase', [
+            'title' => 'Profile',
+            "active" => "profile",
+            "activeNavItem" => "purchaseHistory",
+            'orders' => $order
+        ]);
+    }
 
     public function showPurchase($order_id)
     {
@@ -155,19 +165,117 @@ class UserController extends Controller
         ]);
     }
 
-    public function purchase()
+    public function address()
     {
-        return view('user.purchase', [
+        // for PROVINCE
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "key: 8717a7a6273120d5a841a3bf52623cc7"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            //   echo $response;
+            $province = json_decode($response);
+        }
+
+
+        // for CITY
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.rajaongkir.com/starter/city",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "key: 8717a7a6273120d5a841a3bf52623cc7"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $city = json_decode($response);
+        }
+
+
+        return view('user.address', [
             'title' => 'Profile',
             "active" => "profile",
-            "activeNavItem" => "purchaseHistory",
-            'orders' => Checkout::latest()->get()
+            "activeNavItem" => "address",
+            'users' => User::where('id', Auth()->user()->id)->first(),
+            'provinces' => $province->rajaongkir->results,
+            'cities' => $city->rajaongkir->results,
+
         ]);
     }
 
 
 
+    public function editAddress()
+    {
+        $curl = curl_init();
 
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "key: 8717a7a6273120d5a841a3bf52623cc7"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            //   echo $response;
+            $province = json_decode($response);
+        }
+
+
+
+        return view('user.editAddress', [
+            'title' => 'Profile',
+            "active" => "profile",
+            "activeNavItem" => "address",
+            'provinces' => $province->rajaongkir->results,
+            'users' => User::where('id', Auth()->user()->id)->first(),
+        ]);
+    }
 
 
 

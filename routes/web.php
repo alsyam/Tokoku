@@ -46,6 +46,9 @@ Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('use
 // halam purchase
 Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth');
 Route::get('profile/purchase/{user}', [UserController::class, 'showPurchase'])->middleware('auth');
+// halaman address
+Route::get('profile/address', [UserController::class, 'address'])->middleware('auth');
+Route::get('profile/address/{user}', [UserController::class, 'editAddress'])->middleware('auth');
 
 
 Route::get('/', [ClothesController::class, 'index']);

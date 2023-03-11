@@ -18,16 +18,16 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Address Book' ? 'active' : '' }}"
-                                href="/address">Address Book</a>
+                                href="/profile/address">Address Book</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Access Data' ? 'active' : '' }}" href="#">Access
                                 Data</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Whislits' ? 'active' : '' }}"
                                 href="#">Whislits</a>
-                        </li>
+                        </li> --}}
 
                     </ul>
                 </div>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group mb-2">
                             <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password"
+                            <input type="password" class="form-control" id="password" name="password"
                                 placeholder="Enter password" required>
                         </div>
                         <input type="hidden" name="address" value="{{ $users->address }}">
