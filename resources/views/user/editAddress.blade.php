@@ -35,7 +35,7 @@
                     {{-- <h6>{{ $users->name }}</h6> --}}
                     <form action="/register" method="POST" class="row g-3">
                         @csrf
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="address" class="form-label">Address</label>
                             <input type="text" class="form-control rounded @error('address') is-invalid @enderror"
                                 id="address" name="address" value="{{ $users->address }}">
@@ -58,15 +58,10 @@
                         <div class="col-md-6">
                             <label for="zip_code" class="form-label">Zip Code</label>
                             <input type="text" class="form-control rounded @error('zip_code') is-invalid @enderror"
-                                id="zip_code" name="zip_code" value="{{ }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="phone_number" class="form-label">Phone Number</label>
-                            <input type="text" class="form-control rounded @error('phone_number') is-invalid @enderror"
-                                id="phone_number" name="phone_number" value="{{ old('phone_number') }}">
+                                id="zip_code" name="zip_code" value="{{ $users->zip_code }}">
                         </div>
                         <div class="col-12">
-                            <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Register</button>
+                            <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Change</button>
                         </div>
                     </form>
                 </div>
