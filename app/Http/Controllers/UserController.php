@@ -278,6 +278,34 @@ class UserController extends Controller
     }
 
 
+    public function updateAddress(Request $request)
+    {
+        $member = User::where('id', Auth()->user()->id)->first();
+
+        $user['name'] = $member->name;
+        $user['username'] = $member->username;
+        $user['email'] = $member->email;
+        $user['phone_number'] = $member->phone_number;
+        $user['address'] = $request->get('address');
+        $user['province'] = $request->get('province');
+        $user['city'] = $request->get('city');
+        $user['zip_code'] = $request->get('zip_code');
+
+
+
+        // if (!empty($request->get('password'))) {
+        //     $user['password'] = bcrypt($request->get('password'));
+        // }
+        // if (!empty($validatedData['password'])) {
+        //     $user['password'] = bcrypt($validatedData['password']);
+        // }
+
+
+
+        User::where('id', $member->id)->update($user);
+        return redirect('/profile/address')->with('success', 'Address has been updated!');
+    }
+
 
 
 
