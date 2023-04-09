@@ -23,13 +23,13 @@ use App\Http\Controllers\DashboardClothesController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('home', [
-//         'title' => 'Home',
-//         "active" => "home"
+Route::get('/', function () {
+    return view('home', [
+        'title' => 'Home',
+        "active" => "home"
 
-//     ]);
-// });
+    ]);
+});
 
 // Route::get('/about', function () {
 //     return view('about', [
@@ -52,7 +52,7 @@ Route::get('profile/address/{user}', [UserController::class, 'editAddress'])->mi
 Route::post('/profile/address/{user}', [UserController::class, 'updateAddress'])->name('address.update')->middleware('auth');
 
 
-Route::get('/', [ClothesController::class, 'index']);
+Route::get('clothes/', [ClothesController::class, 'index']);
 
 Route::get('clothes/{clothes:slug}', [ClothesController::class, 'show']);
 

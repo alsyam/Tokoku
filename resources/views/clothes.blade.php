@@ -71,8 +71,10 @@
 
                             {{-- pengecekan apakah ada image atau tidak --}}
                             @if ($cloth->image)
-                                <img src="{{ asset('storage/' . $cloth->image) }}" class="img-fluid" max="500px"
-                                    alt="{{ $cloth->category->name }}">
+                                <a href="/clothes/{{ $cloth->slug }}">
+                                    <img src="{{ asset('storage/' . $cloth->image) }}" class="img-fluid" max="500px"
+                                        alt="{{ $cloth->category->name }}">
+                                </a>
                             @else
                                 <img src="https://source.unsplash.com/500x400?{{ $cloth->category->name }}"
                                     class="card-img-top" alt="{{ $cloth->category->name }}">
@@ -80,19 +82,9 @@
 
                             <div class="card-body">
                                 <a href="/clothes/{{ $cloth->slug }}" class="text-decoration-none text-dark">
-                                    <h5 class="card-title">{{ $cloth->brand }}</h5>
+                                    <p class="card-title">{{ $cloth->product }}</p>
                                 </a>
-                                {{-- <p>
-                                    <small class="text-muted">
-                                        By. <a href="/clothes?author={{ $cloth->author->username }}"
-                                            class="text-decoration-none">{{ $cloth->author->name }}</a>
-                                        {{ $cloth->created_at->diffForHumans() }}
-                                    </small>
-                                </p> --}}
-                                <p class="card-text">{{ $cloth->product }}</p>
-                                {{-- <p class="card-text">{{ $cloth->author->name }}</p> --}}
-                                <p class="card-text">Rp. {{ number_format($cloth->price, 0, ',', '.') }}</p>
-                                <a href="/clothes/{{ $cloth->slug }}" class="btn btn-primary btn-sm">Read more..</a>
+                                <h6 class="card-text">Rp. {{ number_format($cloth->price, 0, ',', '.') }}</h6>
                             </div>
                         </div>
                     </div>
