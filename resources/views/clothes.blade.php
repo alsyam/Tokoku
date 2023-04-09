@@ -28,11 +28,11 @@
 
     {{-- for slider --}}
     @if ($clothes->count())
-        <div class="card mb-3">
+        {{-- <div class="card mb-3">
             @if ($clothes[0]->image)
-                {{-- <img style="width: 500px; height: 300px;" src="{{ asset('storage/' . $clothes[0]->image) }}"
+                <img style="width: 500px; height: 300px;" src="{{ asset('storage/' . $clothes[0]->image) }}"
                     class="card-img-top" alt="{{ $clothes[0]->category->name }}">
-            @else --}}
+            @else
                 <img src="https://source.unsplash.com/1200x400?{{ $clothes[0]->category->name }}" class="card-img-top"
                     alt="{{ $clothes[0]->category->name }}">
             @endif
@@ -56,7 +56,7 @@
 
                 <a href="/clothes/{{ $clothes[0]->slug }}" class="text-decoration-none btn btn-primary">Read more..</a>
             </div>
-        </div>
+        </div> --}}
 
         <div class="container">
             <div class="row">
@@ -90,7 +90,7 @@
                                     </small>
                                 </p> --}}
                                 <p class="card-text">{{ $cloth->product }}</p>
-                                <p class="card-text">{{ $cloth->author->name }}</p>
+                                {{-- <p class="card-text">{{ $cloth->author->name }}</p> --}}
                                 <p class="card-text">Rp. {{ number_format($cloth->price, 0, ',', '.') }}</p>
                                 <a href="/clothes/{{ $cloth->slug }}" class="btn btn-primary btn-sm">Read more..</a>
                             </div>

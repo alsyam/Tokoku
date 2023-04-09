@@ -26,7 +26,7 @@ class ClothesController extends Controller
         return view('clothes', [
             "title" => "All clothes" . $title,
             "active" => "clothes",
-            "clothes" => Clothes::latest()->filter(request(['search', 'category', 'author']))->paginate(13)->withQueryString()
+            "clothes" => Clothes::latest()->filter(request(['search', 'category', 'author']))->paginate(12)->withQueryString()
         ]);
     }
 
