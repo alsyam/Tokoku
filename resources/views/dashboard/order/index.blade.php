@@ -5,7 +5,7 @@
         <h1 class="h2">Order List</h1>
     </div>
     @if (session()->has('success'))
-        <div class="alert alert-info col-lg-8" role="alert">
+        <div class="alert alert-info col-lg-12" role="alert">
             {{ session('success') }}
         </div>
     @endif
@@ -18,7 +18,7 @@
             alert('{{ session('alert-failed') }}')
         </script>
     @endif
-    <div class="table-responsive col-lg-8">
+    <div class="table-responsive col-lg-12">
 
         {{-- <a href="/dashboard/clothes/create" class="btn btn-primary mb-3">Add a product</a> --}}
         <table class="table table-striped table-sm">
@@ -30,9 +30,9 @@
                     {{-- <th scope="col">Product</th> --}}
                     <th scope="col">Customer</th>
                     {{-- <th scope="col">Size</th> --}}
-                    {{-- <th scope="col">Qty</th> --}}
                     <th scope="col">Price</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Confirmation</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -53,11 +53,24 @@
                             {{-- <td> {{ $order->quantity }} pcs</td> --}}
                             <td>Rp. {{ number_format($order->gross_amount, 0, ',', '.') }}</td>
                             @if ($order->status === 'settlement')
-                                <td class="text-success font-weight-bold text-uppercase">{{ $order->status }}</td>
+                                <td class="text-success text-uppercase">
+                                    <h6>{{ $order->status }}</h6>
+                                </td>
                             @elseif($order->status === 'pending')
-                                <td class="text-danger font-weight-bold text-uppercase">{{ $order->status }}</td>
+                                <td class="text-danger text-uppercase">
+                                    <h6>{{ $order->status }}</h6>
+                                </td>
                             @endif
 
+                            @if ($order->confirmation === 'shipped')
+                                <td class="text-success text-uppercase">
+                                    <h6>{{ $order->confirmation }}</h6>
+                                </td>
+                            @elseif($order->confirmation === 'not shipped yet')
+                                <td class="text-danger text-uppercase">
+                                    <h6>{{ $order->confirmation }}</h6>
+                                </td>
+                            @endif
                             <td>
                                 <a href="/dashboard/order/{{ $order->order_id }}" class="badge bg-info"><span
                                         data-feather="eye"></span></a>

@@ -6,9 +6,15 @@
             <div class="col-lg-8">
                 <h3>Transaction Detail</h3>
                 <p> No. Invoice : {{ $order->order_id }} </p>
-                <p>Tanggal Pembelian : {{ $order->created_at->format('d-M-Y h:i') }}</p>
-
-
+                <p> Purchase Date : {{ $order->created_at->format('d-M-Y h:i') }}</p>
+                <p class="text-success"> Confirmation : {{ $order->confirmation }}</p>
+                <form action="/dashboard/order/{{ $order->order_id }}" method="post">
+                    @method('put')
+                    @csrf
+                    <input type="hidden" name="confirmation" value="shipped">
+                    <input type="hidden" name="order_id" value="{{ $order->order_id }}">
+                    <button type="submit" class="btn btn-primary btn-sm mb-3">Confirmation Product</button>
+                </form>
 
                 <h3>Product Details</h3>
                 <table class="table border border-4">
@@ -104,9 +110,9 @@
                         </td>
                     </tr>
                 </table>
+
+                <a href="/dashboard/order" class="btn btn-outline-dark btn-sm">Back</a>
             </div>
         </div>
-
-
     </div>
 @endsection

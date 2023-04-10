@@ -183,9 +183,13 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data['confirmation'] = $request->confirmation;
+        Checkout::where('order_id', $request->order_id)
+            ->update($data);
+
+        return redirect('/dashboard/order')->with('success', 'Confrimation has been updated!');
     }
 
     /**

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('user_booking_id');
             $table->foreignId('admin_id');
             $table->string('status');
+            $table->string('confirmation');
             $table->string('courier');
             $table->string('service');
             $table->string('etd');

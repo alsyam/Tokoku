@@ -41,7 +41,7 @@
                         <td class="card-text">{{ $cloth->s + $cloth->m + $cloth->l + $cloth->xl + $cloth->xxl }}</td>
 
                         {{-- <td>{{ $cloth->description }}</td> --}}
-                        <td>Rp. {{ $cloth->price }}</td>
+                        <td>Rp. {{ number_format($cloth->price, 0, ',', '.') }}</td>
                         <td>
                             <a href="/dashboard/clothes/{{ $cloth->slug }}" class="badge bg-info"><span
                                     data-feather="eye"></span></a>

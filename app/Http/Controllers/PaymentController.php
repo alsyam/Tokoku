@@ -81,6 +81,7 @@ class PaymentController extends Controller
             $order['user_booking_id'] = $request->get('user_booking_id');
             $order['admin_id'] = $request->get('admin_id');
             $order['status'] = $json->transaction_status;
+            $order['confirmation'] = "not shipped yet";
             $order['courier'] = $request->get('courier_name');
             $order['service'] = $request->get('service');
             $order['etd'] = $request->get('etd');
