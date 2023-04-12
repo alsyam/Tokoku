@@ -5,6 +5,8 @@
 
     <p> No. Invoice : {{ $order->order_id }} </p>
     <p>Tanggal Pembelian : {{ $order->created_at->format('d-M-Y h:i') }}</p>
+    <p class="text-success"> Confirmation : {{ $order->confirmation }}</p>
+
 
 
 
