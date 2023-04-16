@@ -10,13 +10,13 @@
             @method('put')
             @csrf
             <div class="mb-3">
-                <label for="product" class="form-label">Name Product</label>
+                <label for="name" class="form-label">Name Category</label>
                 <input type="text"
-                    class="form-control @error('product')
+                    class="form-control @error('name')
                     is-invalid
                 @enderror"
-                    id="product" name="product" required autofocus value="{{ old('name', $categories->name) }}">
-                @error('product')
+                    id="name" name="name" required autofocus value="{{ old('name', $categories->name) }}">
+                @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
