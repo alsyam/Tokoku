@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             @foreach ($categories as $category)
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <a href="/?category={{ $category->slug }}">
                         <div class="card bg-dark text-white">
                             <img src="https://source.unsplash.com/500x500?{{ $category->name }}" class="card-img"
