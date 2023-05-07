@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Clothes;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -26,31 +27,13 @@ use App\Http\Controllers\DashboardClothesController;
 Route::get('/', function () {
     return view('home', [
         'title' => 'Home',
-        "active" => "home"
+        "active" => "home",
+        "clothes" => Clothes::latest()->take(4)->get(),
+        'categories' => Category::take(3)->get()
+
 
     ]);
 });
-
-// Route::get('/about', function () {
-//     return view('about', [
-//         'title' => 'About',
-//         "active" => "about",
-//         'name' => 'Muhammad Al Syam',
-//         'email' =>  'malsyam69@gmail.com',
-//         'image' => 'Penguins.jpg'
-//     ]);
-// });
-
-Route::get('/profile', [UserController::class, 'index'])->middleware('auth');
-Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth');
-// halam purchase
-Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth');
-Route::get('profile/purchase/{user}', [UserController::class, 'showPurchase'])->middleware('auth');
-// halaman address
-Route::get('profile/address', [UserController::class, 'address'])->middleware('auth');
-Route::get('profile/address/{user}', [UserController::class, 'editAddress'])->middleware('auth');
-Route::post('/profile/address/{user}', [UserController::class, 'updateAddress'])->name('address.update')->middleware('auth');
-
 
 Route::get('clothes/', [ClothesController::class, 'index']);
 
@@ -63,6 +46,30 @@ Route::get('/categories', function () {
         'categories' => Category::all()
     ]);
 });
+// Route::get('/about', function () {
+//     return view('about', [
+//         'title' => 'About',
+//         "active" => "about",
+//         'name' => 'Muhammad Al Syam',
+//         'email' =>  'malsyam69@gmail.com',
+//         'image' => 'Penguins.jpg'
+//     ]);
+// });
+
+
+// PROFILE
+Route::get('/profile', [UserController::class, 'index'])->middleware('auth');
+Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth');
+// halam purchase
+Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth');
+Route::get('profile/purchase/{user}', [UserController::class, 'showPurchase'])->middleware('auth');
+// halaman address
+Route::get('profile/address', [UserController::class, 'address'])->middleware('auth');
+Route::get('profile/address/{user}', [UserController::class, 'editAddress'])->middleware('auth');
+Route::post('/profile/address/{user}', [UserController::class, 'updateAddress'])->name('address.update')->middleware('auth');
+
+
+
 
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
