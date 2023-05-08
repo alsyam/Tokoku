@@ -2,6 +2,8 @@
 
 use App\Models\Category;
 use App\Models\Clothes;
+use App\Models\Home;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -25,11 +27,20 @@ use App\Http\Controllers\DashboardClothesController;
 */
 
 Route::get('/', function () {
+    // mengambil data pertama
+    // $firstData = DB::table('homes')->first();
+
+    // // mengambil data mulai dari kedua
+    // $secondData = DB::table('homes')->skip(1)->get();
     return view('home', [
         'title' => 'Home',
         "active" => "home",
         "clothes" => Clothes::latest()->take(4)->get(),
-        'categories' => Category::take(3)->get()
+        'categories' => Category::take(3)->get(),
+        'home' =>  Home::all(),
+        // 'home' =>  Home::all(),
+        // 'homes' =>  "SELECT * 'FROM' homes OFFSET 1",
+        // 'homes' =>  $secondData
 
 
     ]);
