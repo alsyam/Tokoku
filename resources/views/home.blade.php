@@ -8,45 +8,27 @@
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
                     aria-current="true"></button>
-
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5"></button>
 
-
-                {{-- @for ($i = 1; $i < count($home); $i++)
-                    <button type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="{{ $home[$i] }}"></button>
-                @endfor --}}
-
-                {{-- 
-                @while ($i < count($home))
-                    <button type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="{{ $home[$i] }}"></button>
-                    @php
-                        $i++;
-                    @endphp
-                @endwhile --}}
             </div>
             <div class="carousel-inner">
+                {{-- @foreach ($homes as $home)
+                    
+                @endforeach --}}
                 <div class="carousel-item active">
-                    <img src="img/{{ $home[0]->banner }}" class="d-block w-100" alt="...">
+                    <img src="img/{{ $home->banner }}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="img/{{ $home->banner2 }}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="img/{{ $home->banner3 }}" class="d-block w-100" alt="...">
                 </div>
 
-                {{-- @for ($i = 1; $i < count($home); $i++)
-                    <div class="carousel-item">
-                        <img src="img/{{ $home[1]->banner }}" class="d-block w-100" alt="...">
-                    </div>
-                @endfor --}}
 
 
-                @foreach ($home as $home)
-                    <div class="carousel-item">
-                        <img src="img/{{ $home->banner }}" class="d-block w-100" alt="...">
-                    </div>
-                @endforeach
+
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                 data-bs-slide="prev">
