@@ -36,6 +36,15 @@
                     </a>
                 </li>
             </ul>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/home*') ? 'active' : '' }}" aria-current="page"
+                        href="/dashboard/home">
+                        <span data-feather="square"></span>
+                        SET Banner Carousel
+                    </a>
+                </li>
+            </ul>
         @endcan
 
     </div>

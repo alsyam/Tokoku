@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Clothes;
 use App\Models\sizeClothes;
 use App\Models\User;
+use App\Models\Home;
 
 class DatabaseSeeder extends Seeder
 {

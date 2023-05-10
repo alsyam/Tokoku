@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\Category;
-use App\Models\Clothes;
 use App\Models\Home;
+use App\Models\Clothes;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\ClothesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\DashboardHomeController;
 use App\Http\Controllers\DashboardClothesController;
 
 /*
@@ -111,3 +112,4 @@ Route::post('/payment', [PaymentController::class, 'payment_post'])->middleware(
 
 Route::resource('/dashboard/categories', AdminCategoryController::class)->middleware('admin')->except('show');
 Route::resource('/dashboard/order', OrderController::class)->middleware('admin');
+Route::resource('/dashboard/home', DashboardHomeController::class)->middleware('admin');

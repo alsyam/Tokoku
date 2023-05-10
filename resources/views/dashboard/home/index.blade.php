@@ -19,30 +19,32 @@
         </script>
     @endif
     <div class="table-responsive col-lg-8">
-
-        {{-- <a href="/dashboard/clothes/create" class="btn btn-primary mb-3">Add a product</a> --}}
+        @if ($count < 1)
+            <a href="/dashboard/home/create" class="btn btn-primary mb-3">Add a Banner</a>
+        @endif
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Product</th>
+                    <th scope="col">Banner 1</th>
+                    <th scope="col">Banner 2</th>
+                    <th scope="col">Banner 3</th>
+                    <th scope="col">Edit</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($banners as $banner)
+                @foreach ($homes as $home)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td> <img src="{{ asset('storage/' . $home->banner) }}" class="img-fluid" max="200px">
+                        </td>
+                        <td> <img src="{{ asset('storage/' . $home->banner2) }}" class="img-fluid" max="200px">
+                        </td>
+                        <td> <img src="{{ asset('storage/' . $home->banner3) }}" class="img-fluid" max="200px">
+                        </td>
                         <td>
                             {{-- <a href="/dashboard/clothes/{{ $cloth->slug }}" class="badge bg-info"><span
                                 data-feather="eye"></span></a> --}}
-                            <a href="/dashboard/clothes/{{ $banner->slug }}/edit" class="badge bg-warning"><span
+                            <a href="/dashboard/home/{{ $home->id }}/edit" class="badge bg-warning"><span
                                     data-feather="edit"></span></a>
-                            <form action="/dashboard/clothes/{{ $banner->slug }}" method="post" class="d-inline">
-                                @method('delete')
-                                @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Are you sure?')"><span
-                                        data-feather="delete"></span></button>
-                            </form>
                         </td>
                     </tr>
                 @endforeach
