@@ -111,7 +111,7 @@
                     </div>
                 @enderror
             </div>
-            
+
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
                 <input type="number" min="0" max="99999999"

@@ -30,7 +30,7 @@ class DashboardHomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.home.create');
     }
 
     /**
@@ -41,7 +41,20 @@ class DashboardHomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'banner' => 'required|image|file|max:1024',
+            'banner2' => 'required|image|file|max:1024',
+            'banner3' => 'required|image|file|max:1024',
+        ]);
+
+
+        $validatedData['banner'] = $request->file('banner')->store('post-image');
+        $validatedData['banner2'] = $request->file('banner2')->store('post-image');
+        $validatedData['banner3'] = $request->file('banner3')->store('post-image');
+
+        Home::create($validatedData);
+
+        return redirect('/dashboard/home')->with('success', 'New Banner has been added!');
     }
 
     /**
