@@ -34,7 +34,9 @@ Route::get('/', function () {
         "active" => "home",
         "clothes" => Clothes::latest()->take(4)->get(),
         'categories' => Category::take(3)->get(),
-        'home' =>  Home::first()
+        'home' =>  Home::first(),
+        'count' => Home::all()->count()
+
 
 
     ]);

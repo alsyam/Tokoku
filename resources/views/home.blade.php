@@ -13,22 +13,27 @@
 
             </div>
             <div class="carousel-inner">
-                {{-- @foreach ($homes as $home)
-                    
-                @endforeach --}}
-                <div class="carousel-item active">
-                    <img src="img/{{ $home->banner }}" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="img/{{ $home->banner2 }}" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="img/{{ $home->banner3 }}" class="d-block w-100" alt="...">
-                </div>
-
-
-
-
+                @if ($count)
+                    <div class="carousel-item active">
+                        <img src="{{ asset('storage/' . $home->banner) }}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ asset('storage/' . $home->banner2) }}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ asset('storage/' . $home->banner3) }}" class="d-block w-100" alt="...">
+                    </div>
+                @else
+                    <div class="carousel-item active">
+                        <img src="https://source.unsplash.com/1200x400?sale" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://source.unsplash.com/1200x400?sale" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://source.unsplash.com/1200x400?sale" class="d-block w-100" alt="...">
+                    </div>
+                @endif
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                 data-bs-slide="prev">
@@ -41,10 +46,6 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-        {{-- @else
-            <img src="https://source.unsplash.com/1200x400?{{ $clothes[0]->category->name }}" class="card-img-top"
-                alt="{{ $clothes[0]->category->name }}">
-        @endif --}}
     </div>
 
     <h4>Shop Our Category</h4>
