@@ -31,6 +31,19 @@
                     </div>
                 @enderror
             </div>
+
+
+            <div class="mb-3">
+                <label for="background" class="form-label">Background</label>
+                <img class="previewBg img-fluid mb-3 col-sm-5">
+                <input class="form-control @error('background') is-invalid @enderror" type="file" id="background"
+                    name="background" onchange="previewBackground()">
+                @error('background')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
             <button type="submit" class="btn btn-primary">Add New categories</button>
         </form>
     </div>
@@ -44,5 +57,20 @@
         //         .then(response => response.json())
         //         .then(data => slug.value = data.slug)
         // });
+
+        function previewBackground() {
+            const background = document.querySelector('#background');
+            const previewBg = document.querySelector('.previewBg');
+
+            previewBg.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(background.files[0]);
+
+
+            oFReader.onload = function(oFREvent) {
+                previewBg.src = oFREvent.target.result;
+            }
+        }
     </script>
 @endsection

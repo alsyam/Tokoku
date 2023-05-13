@@ -27,8 +27,8 @@
 
 
     {{-- for slider --}}
-    {{-- @if ($clothes->count()) --}}
-    {{-- <div class="card mb-3">
+    @if ($clothes->count())
+        {{-- <div class="card mb-3">
             @if ($clothes[0]->image)
                 <img style="width: 500px; height: 300px;" src="{{ asset('storage/' . $clothes[0]->image) }}"
                     class="card-img-top" alt="{{ $clothes[0]->category->name }}">
@@ -58,41 +58,41 @@
             </div>
         </div> --}}
 
-    <div class="container">
-        <div class="row">
-            @foreach ($clothes as $cloth)
-                <div class="col-md-3 mb-5">
-                    <div class="card">
-                        <div class="position-absolute px-3 py-2 text-white" style="background-color: rgba( 0,0,0, 0.7)">
-                            <a href="/clothes?category={{ $cloth->category->slug }}"
-                                class="text-decoration-none text-white">{{ $cloth->category->name }}</a>
-                        </div>
+        <div class="container">
+            <div class="row">
+                @foreach ($clothes as $cloth)
+                    <div class="col-md-3 mb-5">
+                        <div class="card">
+                            <div class="position-absolute px-3 py-2 text-white" style="background-color: rgba( 0,0,0, 0.7)">
+                                <a href="/clothes?category={{ $cloth->category->slug }}"
+                                    class="text-decoration-none text-white">{{ $cloth->category->name }}</a>
+                            </div>
 
 
-                        {{-- pengecekan apakah ada image atau tidak --}}
-                        @if ($cloth->image)
-                            <a href="/clothes/{{ $cloth->slug }}">
-                                <img src="{{ asset('storage/' . $cloth->image) }}" class="img-fluid" max="500px"
-                                    alt="{{ $cloth->category->name }}">
-                            </a>
-                        @else
-                            <img src="https://source.unsplash.com/500x400?{{ $cloth->category->name }}"
-                                class="card-img-top" alt="{{ $cloth->category->name }}">
-                        @endif
+                            {{-- pengecekan apakah ada image atau tidak --}}
+                            @if ($cloth->image)
+                                <a href="/clothes/{{ $cloth->slug }}">
+                                    <img src="{{ asset('storage/' . $cloth->image) }}" class="img-fluid" max="500px"
+                                        alt="{{ $cloth->category->name }}">
+                                </a>
+                            @else
+                                <img src="https://source.unsplash.com/500x400?{{ $cloth->category->name }}"
+                                    class="card-img-top" alt="{{ $cloth->category->name }}">
+                            @endif
 
-                        <div class="card-body">
-                            <a href="/clothes/{{ $cloth->slug }}" class="text-decoration-none text-dark">
-                                <p class="card-title">{{ $cloth->product }}</p>
-                            </a>
-                            <h6 class="card-text">Rp. {{ number_format($cloth->price, 0, ',', '.') }}</h6>
+                            <div class="card-body">
+                                <a href="/clothes/{{ $cloth->slug }}" class="text-decoration-none text-dark">
+                                    <p class="card-title">{{ $cloth->product }}</p>
+                                </a>
+                                <h6 class="card-text">Rp. {{ number_format($cloth->price, 0, ',', '.') }}</h6>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
-@else
-    <p class="text-center fs-4">NO CLOTHES FOUND!</p>
+    @else
+        <p class="text-center fs-4">NO CLOTHES FOUND!</p>
     @endif
 
     <div class="d-flex justify-content-end">

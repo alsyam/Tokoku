@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class AdminCategoryController extends Controller
@@ -46,6 +48,8 @@ class AdminCategoryController extends Controller
     {
         $data['name'] = $request->name;
         $data['slug'] = $request->slug;
+        $data['background'] = $request->file('background')->store('post-image');
+
         Category::create($data);
 
         return redirect('/dashboard/categories')->with('success', 'New Product has been added!');
@@ -83,8 +87,23 @@ class AdminCategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $data['name'] = $request->name;
-        $data['slug'] = $request->slug;
+        $rules = [
+            'name' => 'required|max:255',
+            'slug' => 'required',
+            'background' => 'required|image|file|max:1024',
+
+
+        ];
+
+        $data = $request->validate($rules);
+
+
+        if ($request->file('background')) {
+            if ($request->oldBackground) {
+                Storage::delete($request->oldBackground);
+            }
+            $data['background'] = $request->file('background')->store('post-image');
+        }
         Category::where('slug', $category->slug)->update($data);
 
         return redirect('/dashboard/categories')->with('success', 'New Product has been updated!');

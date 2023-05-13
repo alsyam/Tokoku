@@ -17,6 +17,7 @@
                 <tr>
                     <th scope="col">No</th>
                     <th scope="col">Category Name</th>
+                    <th scope="col">Background</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -25,6 +26,8 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
+                        <td> <img src="{{ asset('storage/' . $category->background) }}" class="img-fluid" width="200px">
+                        </td>
                         <td>
                             <a href="/dashboard/categories/{{ $category->slug }}/edit" class="badge bg-warning"><span
                                     data-feather="edit"></span></a>

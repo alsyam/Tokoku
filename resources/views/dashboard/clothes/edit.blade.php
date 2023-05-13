@@ -146,7 +146,7 @@
             <div class="mb-3">
                 <label for="image2" class="form-label">Product Image 2</label>
                 <input type="hidden" name="oldImageTwo" value="{{ $clothes->image2 }}">
-                @if ($clothes->image)
+                @if ($clothes->image2)
                     <img src="{{ asset('storage/' . $clothes->image2) }}"
                         class="img-preview-two img-fluid mb-3 col-sm-5 d-block">
                 @else
@@ -163,7 +163,7 @@
             <div class="mb-3">
                 <label for="image3" class="form-label">Product Image 3</label>
                 <input type="hidden" name="oldImageThree" value="{{ $clothes->image3 }}">
-                @if ($clothes->image)
+                @if ($clothes->image3)
                     <img src="{{ asset('storage/' . $clothes->image3) }}"
                         class="img-preview-three img-fluid mb-3 col-sm-5 d-block">
                 @else
