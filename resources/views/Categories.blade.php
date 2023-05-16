@@ -8,13 +8,6 @@
                 <div class="col-md-3">
                     <a href="/clothes/?category={{ $category->slug }}">
                         <div class="card bg-dark text-white">
-                            {{-- @if (!$category->background)
-                                <img src="{{ asset('storage/' . $category->background) }}"" class="card-img"
-                                    alt="{{ $category->name }}">
-                            @else
-                                <img src="https://source.unsplash.com/1200x400?{{ $category->name }}" class="card-img-top"
-                                    alt="{{ $category->name }}">
-                            @endif --}}
                             <img src="{{ asset('storage/' . $category->background) }}"" class="card-img"
                                 alt="{{ $category->name }}">
                             <div class="card-img-overlay d-flex align-items-center p-0">

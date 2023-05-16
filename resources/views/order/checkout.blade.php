@@ -105,13 +105,7 @@
                 <input type="hidden" value="{{ $user->email }}" name="email">
                 <input type="hidden" value="{{ $user->phone_number }}" name="phone_number">
                 @foreach ($booking as $book)
-                    {{-- <input type="hidden" value="{{ $book->quantity }}" name="quantity"> --}}
-                    {{-- <input type="hidden" value="{{ $book->clothes_id }}" name="clothes_id"> --}}
-                    {{-- <input type="hidden" value="{{ $book->clothes->product }}" name="product"> --}}
-                    {{-- <input type="hidden" value="{{ $book->clothes->price }}" name="price"> --}}
-                    {{-- <input type="hidden" value="{{ $book->id }}" name="booking_id"> --}}
                     <input type="hidden" value="{{ $book->admin_id }}" name="admin_id">
-                    {{-- <input type="hidden" value="{{ $book->size_cloth }}" name="size_cloth"> --}}
                 @endforeach
 
                 <button type="submit">Lanjut</button>

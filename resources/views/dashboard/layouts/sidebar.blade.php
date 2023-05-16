@@ -7,17 +7,20 @@
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/clothes*') ? 'active' : '' }}" href="/dashboard/clothes">
-                    <span data-feather="file-text"></span>
-                    My Clothes
-                </a>
-            </li>
+
         </ul>
         @can('admin')
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                 <span>Administrator</span>
             </h6>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/clothes*') ? 'active' : '' }}" href="/dashboard/clothes">
+                        <span data-feather="file-text"></span>
+                        Clothes
+                    </a>
+                </li>
+            </ul>
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('dashboard/categories*') ? 'active' : '' }}" aria-current="page"
