@@ -15,6 +15,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\DashboardHomeController;
 use App\Http\Controllers\DashboardClothesController;
+use App\Http\Controllers\DashboardUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +43,8 @@ Route::get('/', function () {
     ]);
 });
 
+//CLothes Controller 
 Route::get('clothes/', [ClothesController::class, 'index']);
-
 Route::get('clothes/{clothes:slug}', [ClothesController::class, 'show']);
 
 Route::get('/categories', function () {
@@ -95,8 +96,10 @@ Route::get('/dashboard', function () {
 
 
 
-Route::get('dashboard/clothes/checkSlug', [DashboardClothesController::class, 'checkSlug'])->middleware('auth');
 
+
+Route::get('dashboard/clothes/checkSlug', [DashboardClothesController::class, 'checkSlug'])->middleware('auth');
+Route::get('dashboard/clothes/export/', [DashboardClothesController::class, 'export_excel'])->middleware('auth');
 // route clothes
 Route::resource('/dashboard/clothes', DashboardClothesController::class)->middleware('auth');
 
@@ -113,5 +116,11 @@ Route::post('/payment', [PaymentController::class, 'payment_post'])->middleware(
 
 
 Route::resource('/dashboard/categories', AdminCategoryController::class)->middleware('admin')->except('show');
+
+Route::get('/dashboard/order/export/', [OrderController::class, 'export_excel'])->middleware('admin');
 Route::resource('/dashboard/order', OrderController::class)->middleware('admin');
+
 Route::resource('/dashboard/home', DashboardHomeController::class)->middleware('admin');
+
+Route::get('/dashboard/users/export/', [DashboardUserController::class, 'export_excel'])->middleware('admin');
+Route::resource('/dashboard/users', DashboardUserController::class)->middleware('admin');

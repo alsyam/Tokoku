@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CheckoutExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\Checkout;
 use App\Models\User;
@@ -21,6 +23,11 @@ class OrderController extends Controller
         return view('dashboard.order.index', [
             'orders' => Checkout::latest()->get()
         ]);
+    }
+
+    public function export_excel()
+    {
+        return Excel::download(new CheckoutExport, 'chekouts.xlsx');
     }
 
     /**
@@ -44,50 +51,6 @@ class OrderController extends Controller
         //
     }
 
-    // // shipping costs
-    // public function courier()
-    // {
-    //     $id_hometown = $_GET['id_hometown'];
-    //     $id_destination_city = $_GET['id_destination_city'];
-    //     $weight = $_GET['weight'];
-    //     $courier = $_GET['courier'];
-
-
-    //     $curl = curl_init();
-
-    //     curl_setopt_array($curl, array(
-    //         CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
-    //         CURLOPT_RETURNTRANSFER => true,
-    //         CURLOPT_ENCODING => "",
-    //         CURLOPT_MAXREDIRS => 10,
-    //         CURLOPT_TIMEOUT => 30,
-    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //         CURLOPT_CUSTOMREQUEST => "POST",
-    //         CURLOPT_POSTFIELDS => "origin=" . $id_hometown . "&destination=" . $id_destination_city . "&weight=" . $weight . "&courier=" . $courier,
-    //         CURLOPT_HTTPHEADER => array(
-    //             "content-type: application/x-www-form-urlencoded",
-    //             "key: 8717a7a6273120d5a841a3bf52623cc7"
-    //         ),
-    //     ));
-
-    //     $response = curl_exec($curl);
-    //     $err = curl_error($curl);
-
-    //     curl_close($curl);
-
-    //     if ($err) {
-    //         echo "cURL Error #:" . $err;
-    //     } else {
-    //         // echo $response;
-    //         $cost = json_decode($response);
-    //         // echo "<pre>";
-    //         // print_r($cost);
-    //         // "</pre>";
-    //     }
-    //     return view('dashboard.order.courier', [
-    //         'cost' => $cost->rajaongkir->results[0]->costs
-    //     ]);
-    // }
     public function show($order_id)
     {
         // for PROVINCE

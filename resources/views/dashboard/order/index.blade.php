@@ -21,6 +21,8 @@
     <div class="table-responsive col-lg-12">
 
         {{-- <a href="/dashboard/clothes/create" class="btn btn-primary mb-3">Add a product</a> --}}
+        <a href="/dashboard/order/export" class="btn btn-success mb-3 "><span data-feather="align-justify"></span> Export
+            Excel</a>
         <table class="table table-striped table-sm">
             <thead>
                 <tr>

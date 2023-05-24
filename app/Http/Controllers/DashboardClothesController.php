@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ClothesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Clothes;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -24,6 +26,12 @@ class DashboardClothesController extends Controller
         return view('dashboard.clothes.index', [
             'clothes' => Clothes::where('user_id', Auth()->user()->id)->get()
         ]);
+    }
+
+
+    public function export_excel()
+    {
+        return Excel::download(new ClothesExport, 'clothes.xlsx');
     }
 
     /**
@@ -95,7 +103,8 @@ class DashboardClothesController extends Controller
      */
     public function edit(Clothes $clothes)
     {
-        return view('dashboard.clothes.edit',
+        return view(
+            'dashboard.clothes.edit',
             [
                 'clothes' => $clothes,
                 'categories' => Category::all()
