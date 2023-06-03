@@ -45,10 +45,10 @@
 <body>
     @include('partials.navbar')
 
-    <div class="container mt-4">
+    <div class="container mt-4 mb-10">
         @yield('container')
     </div>
-    @include('partials.footer')
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

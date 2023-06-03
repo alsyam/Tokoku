@@ -112,9 +112,8 @@
             </form>
         </div>
     </div>
-    </body>
+    @include('partials.footer')
 
-    </html>
     <script>
         function cekCost() {
             var id_hometown = document.getElementById('id_hometown').value;

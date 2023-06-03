@@ -99,4 +99,6 @@
 
         {{ $clothes->links() }}
     </div>
+    @include('partials.footer')
+
 @endsection

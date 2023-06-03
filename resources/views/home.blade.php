@@ -102,4 +102,5 @@
             </div>
         @endforeach
     </div>
+    @include('partials.footer')
 @endsection

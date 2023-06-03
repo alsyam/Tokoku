@@ -57,4 +57,5 @@
 
         <a href="/checkout" class="btn btn-danger">Checkout</a>
     </div>
+    @include('partials.footer')
 @endsection
