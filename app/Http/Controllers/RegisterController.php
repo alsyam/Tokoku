@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -97,11 +99,16 @@ class RegisterController extends Controller
             'phone_number' =>  'required|max:255',
         ]);
 
+
         $validatedData['password'] = Hash::make($validatedData['password']);
-        User::create($validatedData);
+        $user = User::create($validatedData);
 
-        // $request->session()->flash('success', 'Registration successfully! Please Login ');
+        event(new Registered($user));
 
-        return redirect('/login')->with('success', 'Registration successfully! Please Login ');
+        Auth::login($user);
+
+
+        return redirect()->route('verification.notice')->with('success', 'Registration successfully! Please Verification Email ');
+        // return redirect('/login')->with('success', 'Registration successfully! Please Login ');
     }
 }

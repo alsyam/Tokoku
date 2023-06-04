@@ -14,8 +14,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\DashboardHomeController;
-use App\Http\Controllers\DashboardClothesController;
 use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\DashboardClothesController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +67,7 @@ Route::get('/categories', function () {
 
 
 // PROFILE
-Route::get('/profile', [UserController::class, 'index'])->middleware('auth');
+Route::get('/profile', [UserController::class, 'index'])->middleware('auth',  'verified');
 Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth');
 // halam purchase
 Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth');
@@ -79,14 +80,26 @@ Route::post('/profile/address/{user}', [UserController::class, 'updateAddress'])
 
 
 
-
+// login
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-
+// register
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/email/verify', function () {
+    return view('auth-verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/profile');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+
 Route::get('/city', [RegisterController::class, 'city']);
 
 
@@ -98,8 +111,8 @@ Route::get('/dashboard', function () {
 
 
 
-Route::get('dashboard/clothes/checkSlug', [DashboardClothesController::class, 'checkSlug'])->middleware('auth');
-Route::get('dashboard/clothes/export/', [DashboardClothesController::class, 'export_excel'])->middleware('auth');
+Route::get('/dashboard/clothes/checkSlug', [DashboardClothesController::class, 'checkSlug'])->middleware('auth');
+Route::get('/dashboard/clothes/export/', [DashboardClothesController::class, 'export_excel'])->middleware('auth');
 // route clothes
 Route::resource('/dashboard/clothes', DashboardClothesController::class)->middleware('auth');
 
