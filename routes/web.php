@@ -3,6 +3,7 @@
 use App\Models\Home;
 use App\Models\Clothes;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -67,7 +68,7 @@ Route::get('/categories', function () {
 
 
 // PROFILE
-Route::get('/profile', [UserController::class, 'index'])->middleware('auth',  'verified');
+Route::get('/profile', [UserController::class, 'index'])->middleware('auth', 'verified');
 Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth');
 // halam purchase
 Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth');
@@ -98,6 +99,11 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect('/profile');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
+Route::get('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return 'Verifikasi email dikirim lagi';
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 Route::get('/city', [RegisterController::class, 'city']);
