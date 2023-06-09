@@ -16,8 +16,17 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('cart')->only(['index']);
+    }
+
+
+
     public function index()
     {
+        // $this->authorize('cart');
+
         return view('order.booking', [
             'title' => 'Shopping Cart',
             "active" => "booking",

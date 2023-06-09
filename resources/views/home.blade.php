@@ -1,6 +1,11 @@
 @extends('layouts.main')
 
 @section('container')
+    @if (session()->has('success'))
+        <div class="alert alert-danger col-lg-12 text-center" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     {{-- for slider --}}
     <div class="card mb-5">
         {{-- @if ($clothes[0]->image) --}}

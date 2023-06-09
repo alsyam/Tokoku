@@ -39,9 +39,6 @@ Route::get('/', function () {
         'categories' => Category::take(3)->get(),
         'home' =>  Home::first(),
         'count' => Home::all()->count()
-
-
-
     ]);
 });
 
