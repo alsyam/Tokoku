@@ -187,13 +187,15 @@ class BookingController extends Controller
     public function store(Request $request)
     {
 
+        $clothes = Clothes::where('id', $request->get('clothes_id'))->value('price');
+
         $data['user_booking_id'] = auth()->user()->id;
         $data['clothes_id'] = $request->get('clothes_id');
         $data['size_cloth'] = $request->get('size_cloth');
         $data['quantity'] = $request->get('quantity');
         $data['weight_product'] = $request->get('weight_product');
         $data['admin_id'] = $request->get('admin_id');
-        $data['subtotal'] = 0;
+        $data['subtotal'] = $request->get('quantity') *  $clothes;
         $data['order_desc'] = 'selesai';
 
         Booking::create($data);

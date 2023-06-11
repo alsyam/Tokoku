@@ -32,7 +32,6 @@
                     </ul>
                 </div>
                 <div class="card-body">
-                    {{-- <h6>{{ $users->name }}</h6> --}}
                     <form action="{{ route('address.update', $users->id) }}}" method="POST" class="row g-3">
                         @csrf
                         <div class="col-6">

@@ -32,9 +32,9 @@
                     </ul>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('users.update', $users->id) }}}" method="POST">
+                    <form action="/profile/{{ $users->id }}" method="POST">
+                        @method('PUT')
                         @csrf
-                        {{-- @method('PUT') --}}
                         <div class="form-group mb-2">
                             <label for="fullname">Full Name</label>
                             <input type="text" class="form-control" id="name" name="name"

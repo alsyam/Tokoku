@@ -25,51 +25,6 @@ class UserController extends Controller
     }
     public function updateUser(Request $request)
     {
-        $member = User::where('id', Auth()->user()->id)->first();
-        // $user = User::find($id);
-        // $validatedData = $request->validate([
-        //     'name' => 'required|max:255',
-        //     'username' => 'required|min:3|max:255|unique:users',
-        //     'email' => 'required|email:dns|unique:users',
-        //     'password' =>  'required|min:5|max:255',
-        //     'address' =>  'required|max:255',
-        //     'province' =>  'required|max:255',
-        //     'city' =>  'required|max:255',
-        //     'zip_code' =>  'required|max:255',
-        //     'phone_number' =>  'required|max:255',
-        // ]);
-
-        // $user['name'] = $validatedData['name'];
-        // $user['username'] = $validatedData['username'];
-        // $user['email'] = $validatedData['email'];
-        // $user['address'] = $validatedData['address'];
-        // $user['province'] = $validatedData['province'];
-        // $user['city'] = $validatedData['city'];
-        // $user['zip_code'] = $validatedData['zip_code'];
-        // $user['phone_number'] = $validatedData['phone_number'];
-
-        $user['name'] = $request->get('name');
-        $user['username'] = $request->get('username');
-        $user['email'] = $request->get('email');
-        $user['phone_number'] = $request->get('phone_number');
-        $user['address'] = $member->address;
-        $user['province'] = $member->province;
-        $user['city'] = $member->city;
-        $user['zip_code'] = $member->zip_code;
-
-
-
-        if (!empty($request->get('password'))) {
-            $user['password'] = bcrypt($request->get('password'));
-        }
-        // if (!empty($validatedData['password'])) {
-        //     $user['password'] = bcrypt($validatedData['password']);
-        // }
-
-
-
-        User::where('id', $request->id)->update($user);
-        return redirect('/profile')->with('success', 'Personal data has been updated!');
     }
 
     public function purchase()
@@ -362,9 +317,53 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $users)
     {
-        //
+        $member = User::where('id', Auth()->user()->id)->first();
+        // $user = User::find($id);
+        // $validatedData = $request->validate([
+        //     'name' => 'required|max:255',
+        //     'username' => 'required|min:3|max:255|unique:users',
+        //     'email' => 'required|email:dns|unique:users',
+        //     'password' =>  'required|min:5|max:255',
+        //     'address' =>  'required|max:255',
+        //     'province' =>  'required|max:255',
+        //     'city' =>  'required|max:255',
+        //     'zip_code' =>  'required|max:255',
+        //     'phone_number' =>  'required|max:255',
+        // ]);
+
+        // $user['name'] = $validatedData['name'];
+        // $user['username'] = $validatedData['username'];
+        // $user['email'] = $validatedData['email'];
+        // $user['address'] = $validatedData['address'];
+        // $user['province'] = $validatedData['province'];
+        // $user['city'] = $validatedData['city'];
+        // $user['zip_code'] = $validatedData['zip_code'];
+        // $user['phone_number'] = $validatedData['phone_number'];
+
+        $user['name'] = $request->get('name');
+        $user['username'] = $request->get('username');
+        $user['email'] = $request->get('email');
+        $user['phone_number'] = $request->get('phone_number');
+        $user['address'] = $member->address;
+        $user['province'] = $member->province;
+        $user['city'] = $member->city;
+        $user['zip_code'] = $member->zip_code;
+
+
+
+        if (!empty($request->get('password'))) {
+            $user['password'] = bcrypt($request->get('password'));
+        }
+        // if (!empty($validatedData['password'])) {
+        //     $user['password'] = bcrypt($validatedData['password']);
+        // }
+
+
+
+        User::where('id', $request->id)->update($user);
+        return redirect('/profile')->with('success', 'Personal data has been updated!');
     }
 
     /**

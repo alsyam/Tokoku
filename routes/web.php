@@ -65,8 +65,9 @@ Route::get('/categories', function () {
 
 
 // PROFILE
-Route::get('/profile', [UserController::class, 'index'])->middleware('auth', 'verified', 'verified');
-Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth', 'verified');
+Route::resource('/profile', UserController::class)->middleware('auth');
+// Route::get('/profile', [UserController::class, 'index'])->middleware('auth', 'verified');
+// Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth', 'verified');
 // halam purchase
 Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth', 'verified');
 Route::get('profile/purchase/{user}', [UserController::class, 'showPurchase'])->middleware('auth', 'verified');
