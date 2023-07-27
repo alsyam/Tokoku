@@ -46,7 +46,7 @@ class DashboardUserController extends Controller
             $city = json_decode($response);
         }
         return view('dashboard.users.index', [
-            'users' => User::all(),
+            'users' => User::where('id', '!=', Auth()->user()->id)->get(),
             'cities' => $city->rajaongkir->results,
         ]);
     }

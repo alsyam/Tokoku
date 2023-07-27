@@ -23,9 +23,6 @@ class UserController extends Controller
 
         ]);
     }
-    public function updateUser(Request $request)
-    {
-    }
 
     public function purchase()
     {
@@ -258,7 +255,7 @@ class UserController extends Controller
 
 
         User::where('id', $member->id)->update($user);
-        return redirect('/profile/address')->with('success', 'Address has been updated!');
+        return redirect('/address')->with('success', 'Address has been updated!');
     }
 
 

@@ -18,6 +18,8 @@ use App\Http\Controllers\DashboardHomeController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\DashboardClothesController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\DashboardAdminProfileController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,28 +55,19 @@ Route::get('/categories', function () {
         'categories' => Category::all()
     ]);
 });
-// Route::get('/about', function () {
-//     return view('about', [
-//         'title' => 'About',
-//         "active" => "about",
-//         'name' => 'Muhammad Al Syam',
-//         'email' =>  'malsyam69@gmail.com',
-//         'image' => 'Penguins.jpg'
-//     ]);
-// });
-
 
 // PROFILE
-Route::resource('/profile', UserController::class)->middleware('auth');
+Route::resource('/profile', UserController::class)->middleware('auth', 'verified');
 // Route::get('/profile', [UserController::class, 'index'])->middleware('auth', 'verified');
 // Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth', 'verified');
 // halam purchase
-Route::get('profile/purchase', [UserController::class, 'purchase'])->middleware('auth', 'verified');
-Route::get('profile/purchase/{user}', [UserController::class, 'showPurchase'])->middleware('auth', 'verified');
+Route::get('/purchase', [UserController::class, 'purchase'])->middleware('auth', 'verified');
+
+Route::get('/purchase/{user}', [UserController::class, 'showPurchase'])->middleware('auth', 'verified');
 // halaman address
-Route::get('profile/address', [UserController::class, 'address'])->middleware('auth', 'verified');
-Route::get('profile/address/{user}', [UserController::class, 'editAddress'])->middleware('auth', 'verified');
-Route::post('/profile/address/{user}', [UserController::class, 'updateAddress'])->name('address.update')->middleware('auth', 'verified');
+Route::get('/address', [UserController::class, 'address'])->middleware('auth', 'verified');
+Route::get('/address/{user}', [UserController::class, 'editAddress'])->middleware('auth', 'verified');
+Route::post('/address/{user}', [UserController::class, 'updateAddress'])->name('address.update')->middleware('auth', 'verified');
 
 
 
@@ -110,16 +103,6 @@ Route::get('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware('admin');
-
-
-Route::get('/dashboard/clothes/checkSlug', [DashboardClothesController::class, 'checkSlug'])->middleware('admin');
-Route::get('/dashboard/clothes/export/', [DashboardClothesController::class, 'export_excel'])->middleware('admin');
-// route clothes
-Route::resource('/dashboard/clothes', DashboardClothesController::class)->middleware('admin');
-
 // manage Cart
 Route::resource('/booking', BookingController::class)->middleware('auth');
 Route::get('/checkout', [BookingController::class, 'checkout'])->middleware('auth', 'verified');
@@ -130,6 +113,21 @@ Route::get('/payment', [PaymentController::class, 'payment'])->middleware('auth'
 Route::post('/payment', [PaymentController::class, 'payment_post'])->middleware('auth', 'verified');
 
 
+
+
+
+// ADMINSTRATOR //
+
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+})->middleware('admin');
+
+
+Route::get('/dashboard/clothes/checkSlug', [DashboardClothesController::class, 'checkSlug'])->middleware('admin');
+Route::get('/dashboard/clothes/export/', [DashboardClothesController::class, 'export_excel'])->middleware('admin');
+// route clothes
+Route::resource('/dashboard/clothes', DashboardClothesController::class)->middleware('admin');
+
 Route::resource('/dashboard/categories', AdminCategoryController::class)->middleware('admin')->except('show');
 
 Route::get('/dashboard/order/export/', [OrderController::class, 'export_excel'])->middleware('admin');
@@ -139,3 +137,5 @@ Route::resource('/dashboard/home', DashboardHomeController::class)->middleware('
 
 Route::get('/dashboard/users/export/', [DashboardUserController::class, 'export_excel'])->middleware('admin');
 Route::resource('/dashboard/users', DashboardUserController::class)->middleware('admin');
+
+Route::resource('/dashboard/admins', DashboardAdminProfileController::class)->middleware('admin');

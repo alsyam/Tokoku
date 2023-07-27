@@ -7,7 +7,7 @@
                 <h3>Transaction Detail</h3>
                 <p> No. Invoice : {{ $order->order_id }} </p>
                 <p> Purchase Date : {{ $order->created_at->format('d-M-Y h:i') }}</p>
-                <p class="text-success"> Confirmation : <b>{{ $order->confirmation }}</b></p>
+                <p class="text-danger"> Confirmation : <b>{{ $order->confirmation }}</b></p>
 
                 @if ($order->confirmation == 'shipped')
                 @else
@@ -43,11 +43,9 @@
                     @endforeach
                 </table>
                 <h3>Shipping Info</h3>
-                <p>Ongkir kembali jika pesanan tiba lebih dari
-                    {{ intval($order->etd) + intval($day) . ' ' . $month . ' ' . $year }} 23:59 (ada
-                    keterlambatan
-                    penyerahan barang ke
-                    kurir).</p>
+                <p>Return if the order arrives more than
+                    {{ intval($order->etd) + intval($day) . ' ' . $month . ' ' . $year }} 23:59 (there is a delay
+                    delivery of goods to the courier).</p>
                 <table class="table  border border-4">
                     <tr>
                         <td class="">Courier</td>
@@ -81,7 +79,6 @@
                     </tr>
                 </table>
 
-                <hr>
                 <h3>Payment Details</h3>
 
                 <table class="table border border-4">

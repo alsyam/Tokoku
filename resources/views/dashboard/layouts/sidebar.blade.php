@@ -50,10 +50,19 @@
             </ul>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('dashboard/home*') ? 'active' : '' }}" aria-current="page"
+                    <a class="nav-link {{ Request::is('dashboard/users*') ? 'active' : '' }}" aria-current="page"
                         href="/dashboard/users">
                         <span data-feather="user"></span>
                         Users
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/admin*') ? 'active' : '' }}" aria-current="page"
+                        href="/dashboard/admins">
+                        <span data-feather="edit"></span>
+                        Edit Admin Profile
                     </a>
                 </li>
             </ul>

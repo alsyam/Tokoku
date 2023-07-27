@@ -15,11 +15,11 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Purchase History' ? 'active' : '' }}"
-                                href="/profile/purchase">Purchase History</a>
+                                href="/purchase">Purchase History</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Address Book' ? 'active' : '' }}"
-                                href="/profile/address">Address Book</a>
+                                href="/address">Address Book</a>
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link {{ $activeNavItem === 'Access Data' ? 'active' : '' }}" href="#">Access
@@ -47,8 +47,7 @@
                         @endforeach
                         {{ $users->zip_code }}
                     </div>
-                    <a href="/profile/address/{{ $users->id }}"
-                        class="text-decoration-none badge bg-primary mt-2">Edit</a>
+                    <a href="/address/{{ $users->id }}" class="text-decoration-none badge bg-primary mt-2">Edit</a>
                 </div>
             </div>
         </div>
