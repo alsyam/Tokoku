@@ -4,6 +4,10 @@
     <h1>Halaman Profile</h1>
     <div class="row">
         <div class="col-md-12">
+
+            @if ($users->email_verified_at === null)
+                <a href="/email/verification-notification" class="btn btn-danger mb-3">Resend Email Verification</a>
+            @endif
             <!-- Content -->
             <div class="card">
                 <div class="card-header">

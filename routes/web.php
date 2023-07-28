@@ -57,10 +57,7 @@ Route::get('/categories', function () {
 });
 
 // PROFILE
-Route::resource('/profile', UserController::class)->middleware('auth', 'verified');
-// Route::get('/profile', [UserController::class, 'index'])->middleware('auth', 'verified');
-// Route::post('/profile/{user}', [UserController::class, 'updateUser'])->name('users.update')->middleware('auth', 'verified');
-// halam purchase
+Route::resource('/profile', UserController::class)->middleware('auth');
 Route::get('/purchase', [UserController::class, 'purchase'])->middleware('auth', 'verified');
 
 Route::get('/purchase/{user}', [UserController::class, 'showPurchase'])->middleware('auth', 'verified');
@@ -120,7 +117,7 @@ Route::post('/payment', [PaymentController::class, 'payment_post'])->middleware(
 
 Route::get('/dashboard', function () {
     return view('dashboard.index');
-})->middleware('admin');
+})->middleware('admin', 'verified');
 
 
 Route::get('/dashboard/clothes/checkSlug', [DashboardClothesController::class, 'checkSlug'])->middleware('admin');

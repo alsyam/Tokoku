@@ -31,9 +31,17 @@
                     <input type="hidden" value="{{ $clothes->user_id }}" name="admin_id" id="admin_id">
                     <input id="clothes_id" type="hidden" name="clothes_id" value="{{ $clothes->id }}">
                     <input id="slug" type="hidden" name="slug" value="{{ $clothes->slug }}">
-                    <button type="submit" class="btn btn-danger">Add
-                        to shopping cart</button>
-                    <a href="/" class="btn btn-outline-secondary">Back to Clothes</a>
+
+                    @if ($user->email_verified_at === null)
+                        <button type="button" class="btn btn-danger" onclick="showSmallPopup()">Add
+                            to shopping cart</button>
+                    @else
+                        <button type="submit" class="btn btn-danger">Add
+                            to shopping cart</button>
+                    @endif
+
+
+                    <a href="/" class="btn  btn-outline-secondary">Back to Clothes</a>
                 </form>
                 <hr>
             </article>
@@ -93,7 +101,11 @@
     @include('partials.footer')
 @endsection
 
-
+<script>
+    function showSmallPopup() {
+        alert("Please verify your email!");
+    }
+</script>
 
 
 

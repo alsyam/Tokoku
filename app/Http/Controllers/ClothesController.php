@@ -9,6 +9,8 @@ use App\Models\Category;
 
 class ClothesController extends Controller
 {
+
+
     public function index()
     {
 
@@ -35,7 +37,8 @@ class ClothesController extends Controller
         return view("detailClothes", [
             "title" => "Detail Clothes",
             "active" => "clothes",
-            "clothes" => $clothes
+            "clothes" => $clothes,
+            "user" => User::where('id', Auth()->user()->id)->first()
         ]);
     }
 }
