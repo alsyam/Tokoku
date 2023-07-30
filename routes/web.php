@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DashboardOrderController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClothesController;
 use App\Http\Controllers\PaymentController;
@@ -95,8 +95,10 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 // resend email verify
 Route::get('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
-
-    return 'Verifikasi email dikirim lagi';
+    return view('resend-email-verification', [
+        'title' => 'Resend Email',
+        "active" => "Resend Email",
+    ]);
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
@@ -117,7 +119,7 @@ Route::post('/payment', [PaymentController::class, 'payment_post'])->middleware(
 
 Route::get('/dashboard', function () {
     return view('dashboard.index');
-})->middleware('admin', 'verified');
+})->middleware('admin');
 
 
 Route::get('/dashboard/clothes/checkSlug', [DashboardClothesController::class, 'checkSlug'])->middleware('admin');
@@ -127,8 +129,8 @@ Route::resource('/dashboard/clothes', DashboardClothesController::class)->middle
 
 Route::resource('/dashboard/categories', AdminCategoryController::class)->middleware('admin')->except('show');
 
-Route::get('/dashboard/order/export/', [OrderController::class, 'export_excel'])->middleware('admin');
-Route::resource('/dashboard/order', OrderController::class)->middleware('admin');
+Route::get('/dashboard/order/export/', [DashboardOrderController::class, 'export_excel'])->middleware('admin');
+Route::resource('/dashboard/order', DashboardOrderController::class)->middleware('admin');
 
 Route::resource('/dashboard/home', DashboardHomeController::class)->middleware('admin');
 

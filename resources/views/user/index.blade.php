@@ -8,6 +8,9 @@
             @if ($users->email_verified_at === null)
                 <a href="/email/verification-notification" class="btn btn-danger mb-3">Resend Email Verification</a>
             @endif
+            @if ($users->is_admin === 1)
+                <a href="/dashboard" class="btn btn-outline-danger mb-3">Administrator</a>
+            @endif
             <!-- Content -->
             <div class="card">
                 <div class="card-header">

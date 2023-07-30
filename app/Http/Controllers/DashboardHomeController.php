@@ -13,6 +13,11 @@ class DashboardHomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('verified');
+    }
+
     public function index()
     {
         $this->authorize('admin');

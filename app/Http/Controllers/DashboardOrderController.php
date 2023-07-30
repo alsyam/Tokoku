@@ -9,13 +9,18 @@ use App\Models\Checkout;
 use App\Models\User;
 
 
-class OrderController extends Controller
+class DashboardOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('verified');
+    }
+
     public function index()
     {
         $this->authorize('admin');

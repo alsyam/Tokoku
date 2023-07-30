@@ -188,17 +188,28 @@ class BookingController extends Controller
     {
 
         $clothes = Clothes::where('id', $request->get('clothes_id'))->value('price');
+        $user_id =  Booking::where('user_booking_id', Auth()->user()->id)->first();
 
-        $data['user_booking_id'] = auth()->user()->id;
-        $data['clothes_id'] = $request->get('clothes_id');
-        $data['size_cloth'] = $request->get('size_cloth');
-        $data['quantity'] = $request->get('quantity');
-        $data['weight_product'] = $request->get('weight_product');
-        $data['admin_id'] = $request->get('admin_id');
-        $data['subtotal'] = $request->get('quantity') *  $clothes;
-        $data['order_desc'] = 'selesai';
 
-        Booking::create($data);
+        if ($user_id->clothes_id == $request->get('clothes_id') && $user_id->size_cloth === $request->get('size_cloth')) {
+            $totalQ = $user_id->quantity + $request->get('quantity');
+
+            $data['quantity'] = $user_id->quantity + $request->get('quantity');
+            $data['subtotal'] =  $totalQ *  $clothes;
+
+            Booking::where('id', $user_id->id)->update($data);
+        } else {
+            $data['user_booking_id'] = auth()->user()->id;
+            $data['clothes_id'] = $request->get('clothes_id');
+            $data['size_cloth'] = $request->get('size_cloth');
+            $data['quantity'] = $request->get('quantity');
+            $data['weight_product'] = $request->get('weight_product');
+            $data['admin_id'] = $request->get('admin_id');
+            $data['subtotal'] = $request->get('quantity') *  $clothes;
+            $data['order_desc'] = 'selesai';
+
+            Booking::create($data);
+        }
 
         return redirect('/clothes/' . $request->slug)->with('success', 'New Product has been added!');
     }
