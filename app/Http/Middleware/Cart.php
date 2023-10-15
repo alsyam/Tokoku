@@ -17,7 +17,7 @@ class Cart
      */
     public function handle(Request $request, Closure $next)
     {
-        $cart = Booking::all();
+        $cart = Booking::where('user_booking_id', Auth()->user()->id)->get();
         if ($cart->count() === 0) {
             return redirect('/')->with('success', 'Cart is Empty');
         };
