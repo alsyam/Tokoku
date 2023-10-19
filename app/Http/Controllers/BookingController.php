@@ -191,130 +191,6 @@ class BookingController extends Controller
     public function store(Request $request)
     {
 
-        $clothes = Clothes::where('id', $request->get('clothes_id'))->value('price');
-
-        // $clothes_id = [];
-        // $size_cloth = [];
-        // $quantity = [];
-        // $id = [];
-
-        # code...
-        // foreach ($users as $user_id) {
-        //     $clothes_id[] = $user_id->clothes;
-        //     $size_cloth[] = $user_id->size_cloth;
-        //     $quantity[] = $user_id->quantity;
-        //     $id[] = $user_id->id;
-        // }
-        // if ($clothes_id == $request->get('clothes_id') && $size_cloth === $request->get('size_cloth')) {
-        //     $totalQ = $quantity + $request->get('quantity');
-
-        //     $data['quantity'] = $quantity + $request->get('quantity');
-        //     $data['subtotal'] =  $totalQ *  $clothes;
-
-        //     Booking::where('id', $id)->update($data);
-        // } else {
-        //     $data['user_booking_id'] = auth()->user()->id;
-        //     $data['clothes_id'] = $request->get('clothes_id');
-        //     $data['size_cloth'] = $request->get('size_cloth');
-        //     $data['quantity'] = $request->get('quantity');
-        //     $data['weight_product'] = $request->get('weight_product');
-        //     $data['admin_id'] = $request->get('admin_id');
-        //     $data['subtotal'] = $request->get('quantity') *  $clothes;
-        //     $data['order_desc'] = 'selesai';
-
-        //     Booking::create($data);
-        // }
-        // }
-
-        // if ($user_id[0]->clothes_id == $request->get('clothes_id') && $user_id[0]->size_cloth === $request->get('size_cloth')) {
-        //     $totalQ = $user_id[0]->quantity + $request->get('quantity');
-
-        //     $data['quantity'] = $user_id[0]->quantity + $request->get('quantity');
-        //     $data['subtotal'] =  $totalQ *  $clothes;
-
-        //     Booking::where('id', $user_id[0]->id)->update($data);
-        // } else {
-        //     $data['user_booking_id'] = auth()->user()->id;
-        //     $data['clothes_id'] = $request->get('clothes_id');
-        //     $data['size_cloth'] = $request->get('size_cloth');
-        //     $data['quantity'] = $request->get('quantity');
-        //     $data['weight_product'] = $request->get('weight_product');
-        //     $data['admin_id'] = $request->get('admin_id');
-        //     $data['subtotal'] = $request->get('quantity') *  $clothes;
-        //     $data['order_desc'] = 'selesai';
-
-        //     Booking::create($data);
-        // }
-
-
-
-        // logic no 2
-
-        // $booking = Booking::where('user_booking_id', auth()->user()->id)
-        //     ->select('clothes_id', 'size_cloth', 'quantity') // Ganti 'field1' dan 'field2' dengan nama field yang ingin Anda ambil
-        //     ->first();
-
-        // if ($booking) {
-        //     if ($request->get('clothes_id') === $booking->clothes_id && $request->get('size_cloth') === $booking->size_cloth) {
-
-        //         $total = $request->get('quantity') + $booking->quantity;
-        //         $data['quantity'] = $total;
-        //         $data['subtotal'] = $total *  $clothes;
-        //         Booking::where('id', $booking->id)->update($data);
-        //     }
-        // }
-        // $bookings = Booking::where('user_booking_id', auth()->user()->id)
-        //     ->select('clothes_id', 'size_cloth', 'quantity')
-        //     ->get(); // Menggunakan get() untuk mengambil koleksi
-
-        // foreach ($bookings as $booking) {
-        //     if ($request->input('clothes_id') === $booking->clothes_id && $request->input('size_cloth') === $booking->size_cloth) {
-
-        //         $total = $request->input('quantity') + $booking->quantity;
-
-        //         // Anda perlu mengganti $clothes dengan nilai yang sesuai, seperti harga per pakaian
-        //         $subtotal = $total * $clothes;
-
-        //         $data = [
-        //             'quantity' => $total,
-        //             'subtotal' => $subtotal
-        //         ];
-
-        //         Booking::where('id', $booking->id)->update($data);
-
-        //         break;
-        //     }
-        // }
-
-        // $booking = Booking::where('user_booking_id', auth()->user()->id)
-        //     ->select('clothes_id', 'size_cloth', 'quantity')
-        //     ->first();
-
-        // if ($booking) {
-        //     if ($request->input('clothes_id') === $booking->clothes_id && $request->input('size_cloth') === $booking->size_cloth) {
-
-        //         $total = $request->input('quantity') + $booking->quantity;
-
-        //         // Anda perlu mengganti $clothes dengan nilai yang sesuai, seperti harga per pakaian
-        //         $clothes = Clothes::where('id', $request->get('clothes_id'))->value('price');
-
-        //         $subtotal = $total * $clothes;
-
-        //         $data = [
-        //             'quantity' => $total,
-        //             'subtotal' => $subtotal
-        //         ];
-
-        //         Booking::where('id', $booking->id)->update($data);
-        //     }
-        // }
-        // $size = Booking::where('user_booking_id', auth()->user()->id)->get();
-        // $size = Booking::where('user_booking_id', auth()->user()->id)->value('size_cloth');
-
-        // if ($request->get('size_cloth') === $size->size_cloth) {
-        //     return redirect('/clothes/' . $request->slug)->with('success', 'Product sudah dimaskuan dalan cart!');
-        // }
-
 
         $user_id = auth()->user()->id;
 
@@ -323,12 +199,13 @@ class BookingController extends Controller
             ->where('size_cloth', $request->get('size_cloth'))
             ->first();
 
-        // $userBookingId = $booking->user_booking_id;
-        // $clothesId = $booking->clothes_id;
-        // $sizeCloth = $booking->size_cloth;
-
+        $clothes = Clothes::where('id', $request->get('clothes_id'))->value('price');
+        $qty = Clothes::where('id', $request->get('clothes_id'))->value($request->get('size_cloth'));
 
         if ($booking !== null) {
+            if ($booking->quantity === $qty) {
+                return redirect('/clothes/' . $request->slug)->with('success', 'Product size ' . strtoupper($request->get('size_cloth')) . ' maximum stock ' . $qty . '. Please check cart!');
+            }
             if ($request->get('clothes_id') == $booking->clothes_id && $request->get('size_cloth') == $booking->size_cloth) {
 
                 $total = $request->get('quantity') + $booking->quantity;
@@ -339,8 +216,6 @@ class BookingController extends Controller
         } else {
             $data['user_booking_id'] = auth()->user()->id;
             $data['clothes_id'] = $request->get('clothes_id');
-            // $data['clothes_id'] = $booking->size_cloth;
-            // $data['size_cloth'] = $booking->clothes_id;
             $data['size_cloth'] = $request->get('size_cloth');
             $data['quantity'] = $request->get('quantity');
             $data['weight_product'] = $request->get('weight_product');
